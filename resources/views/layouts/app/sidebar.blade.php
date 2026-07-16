@@ -3,7 +3,7 @@
     if($avatar == 'profil.png') {
         $avatar = url('/disk-s3/'.$avatar, []);
     }
-    $logo = auth()->user()->detailuser->instansi->logo??'';
+    $logo = auth()->user()->detailuser?->instansi?->logo??'';
     if(!empty($logo)) {
         $logo = url('/disk-s3/'.$logo, []);
     }
@@ -17,7 +17,7 @@
         <!-- Panggil route manifest Laravel -->
         
         <link rel="icon" href="{{ url('/disk-s3/'.auth()->user()->detailuser?->instansi?->logo??'profil.png') }}">
-        <link rel="apple-touch-icon" href="{{ url('/disk-s3/pwa/'.auth()->user()->detailuser->instansi->logo??'profil.png') }}">
+        <link rel="apple-touch-icon" href="{{ url('/disk-s3/pwa/'.auth()->user()->detailuser?->instansi?->logo??'profil.png') }}">
         <link rel="manifest" href="{{ url('manifest.json?idinstansi='.Session::get('idinstansi'), []) }}">
         <meta name="theme-color" content="#2563eb">
     </head>
