@@ -22,16 +22,9 @@ return new class extends Migration
             $table->unsignedBigInteger('idinstansi');
             $table->time('jammasuk')->default('08:00:00');
             $table->time('jampulang')->default('13:00:00');
+            $table->integer('keterlambatan')->default('15');
             $table->timestamps();
         });
-
-        DB::table('pengaturan')->insert([
-            'idinstansi' => 1,
-            'jammasuk' => '08:00:00',
-            'jampulang' => '13:00:00',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
 
         Carbon::setLocale('id');
         $tanggalawal = Carbon::now()->startOfWeek()->format('Y-m-d');

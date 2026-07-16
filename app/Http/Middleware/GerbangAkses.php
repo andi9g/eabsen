@@ -26,6 +26,7 @@ class GerbangAkses
 
             $user->load('akses');
         }
+
         
         return $next($request);
     }

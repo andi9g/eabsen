@@ -28,11 +28,11 @@
 
     <div class="w-full md:w-[80%] space-y-5 mx-auto">
         <div class="flex flex-col md:flex-row md:items-center">
-            <flux:button wire:click="tomboltambahadmin" variant="primary" color="sky">Tambah Admin</flux:button>
+            <flux:button wire:click="tomboltambahadmin" variant="primary" color="sky" icon="plus-circle">Tambah Admin</flux:button>
 
             <div class="mt-3 md:mt-0 md:ml-auto w-full md:w-auto">
                 <div class="grid grid-cols-1 gap-1">
-                    <flux:input icon="magnifying-glass" class="w-fit ml-auto" placeholder="Search..." wire:model.live="search"/>
+                    <flux:input icon="magnifying-glass" class="w-fit ml-auto" placeholder="Search..." wire:model.live.debounce.500ms="search"/>
                 </div>
             </div>
         
@@ -49,7 +49,7 @@
             </flux:kanban.card>
         @endif
         @foreach ($user as $item)
-        <flux:callout icon="user">
+        <flux:callout icon="user" wire:key="item-{{ $item->id }}">
             
             
             <div class="flex flex-col md:flex-row md:items-center">
@@ -67,12 +67,12 @@
         
                 <div class="mt-3 md:mt-0 md:ml-auto w-full md:w-auto">
                     <div class="grid grid-cols-2 gap-2">
-                        <flux:badge as="button" variant="pill" color="red" icon="trash" button>
+                        <flux:badge as="button" variant="pill" color="red" icon="trash" wire:click="hapusadmin({{ $item->iduser }})">
                             Hapus
                         </flux:badge>
         
-                        <flux:badge as="button" variant="pill" color="blue" icon="pencil">
-                            Edit
+                        <flux:badge as="button" variant="pill" color="blue" icon="key" wire:click="resetkey({{ $item->iduser }})">
+                            Reset Key
                         </flux:badge>
                     </div>
                 </div>

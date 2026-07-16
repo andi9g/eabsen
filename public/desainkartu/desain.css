@@ -1,0 +1,144 @@
+
+        /* Pengaturan Halaman PDF Landscape */
+        @page {
+            margin: 0.5cm; /* Beri sedikit margin kertas agar printer tidak memotong border luar */
+            size: landscape;
+        }
+        
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+        }
+
+        /* Pembungkus per User (Page Break otomatis jika lebih dari satu user) */
+        .user-wrapper {
+            display: inline-block; /* Membuatnya bisa berjajar ke samping */
+            vertical-align: top;   /* Memastikan baris kartu sejajar rata atas */
+            margin: 10px;          /* Jarak antar box user (atas, bawah, kanan, kiri) */
+            page-break-inside: avoid; /* Mencegah kartu terpotong di tengah halaman */
+        }
+        
+        /* Hilangkan page break untuk user terakhir agar tidak ada halaman kosong di akhir */
+        .user-wrapper:last-child {
+            page-break-after: avoid;
+        }
+
+        /* Box Luar dengan garis putus-putus untuk area potong */
+        .cutting-box {
+            border: 2px dashed #999999;
+            padding: 10px;         /* Sedikit diperkecil agar lebih hemat ruang */
+            background: #fafafa;
+            border-radius: 8px;
+        }
+
+        /* Pastikan ukuran tabel di dalamnya pas */
+        .card-table {
+            border-collapse: separate;
+            border-spacing: 10px 0; /* Jarak antara kartu depan & belakang sedikit diperkecil */
+        }
+
+        /* Standar Ukuran Kartu RFID Vertikal: 5.4cm x 8.6cm */
+        .card {
+            width: 5.4cm;
+            height: 8.6cm;
+            position: relative;
+            border-radius: 8px; /* Sudut rounded sedikit */
+            overflow: hidden;
+            -webkit-border-radius: 8px; /* Fallback dompdf older version */
+            border: 1px solid #ddd; /* Tipis saja untuk batas potong pas kartu */
+        }
+
+        /* Desain Background Kartu Depan */
+        .card-front {
+            /* Ganti dengan URL gambar background Anda atau warna gradient */
+            
+            /* Contoh jika pakai gambar background: 
+               background-image: url('{{ public_path("images/bg-front.png") }}'); 
+               background-size: cover; 
+            */
+            color: #ffffff;
+        }
+
+        /* Desain Background Kartu Belakang */
+        .card-back {
+            /* Contoh jika pakai gambar background: 
+               background-image: url('{{ public_path("images/bg-back.png") }}'); 
+               background-size: cover; 
+            */
+            color: #ffffff;
+        }
+
+        /* --- ISI KONTEN KARTU DEPAN --- */
+        .card-header {
+            text-align: center;
+            padding-top: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .profile-wrapper {
+            text-align: center;
+            margin: 20px 0px;
+        }
+
+        /* Foto profil bulat */
+        .profile-img {
+            object-fit: cover;
+            object-position: top center;
+        }
+
+        .card-body {
+            text-align: center;
+            margin-top: 15px;
+            padding: 0 10px;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .user-nisn {
+            font-size: 8.5pt;
+            color: #e2e8f0;
+        }
+
+        /* --- ISI KONTEN KARTU BELAKANG --- */
+        .card-back-content {
+            padding: 20px 15px;
+            font-size: 9px;
+            line-height: 1.4;
+        }
+
+        .terms-title {
+            font-weight: bold;
+            font-size: 11px;
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 5px;
+        }
+
+        .terms-list {
+            margin: 0;
+            padding-left: 15px;
+        }
+
+        .card-footer {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 8px;
+            color: #cbd5e0;
+        }
+
+        .tabel-tengah {
+            display: flex;
+        }

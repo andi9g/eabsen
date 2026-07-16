@@ -10,6 +10,8 @@ class detailuserM extends Model
     protected $primaryKey = 'iddetailuser';
     protected $guarded = [];
     protected $connection = 'mysql';
+
+    protected $with = ["instansi"];
         
     //protected $fillable = ['name1','name2'];
         

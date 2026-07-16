@@ -9,7 +9,7 @@ use Jantinnerezo\LivewireAlert\Enums\Position;
 
 return [
     'position' => Position::Center,
-    'timer' => 3000,
+    'timer' => 5000,
     'toast' => false,
     'text' => null,
     'confirmButtonText' => 'Yes',

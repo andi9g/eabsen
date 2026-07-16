@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('akses', function (Blueprint $table) {
             $table->bigIncrements('idakses');
             $table->unsignedBigInteger('iduser')->unique();
-            $table->enum('akses', ['superadmin','admin', 'pegawai','user']);
+            $table->enum('akses', ['superadmin','admin', 'pegawai','user', 'waka', 'kepsek']);
             $table->timestamps();
         });
     }

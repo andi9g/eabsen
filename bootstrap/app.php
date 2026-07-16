@@ -17,7 +17,17 @@ return Application::configure(basePath: dirname(__DIR__))
             'superadmin' => App\Http\Middleware\GerbangSuperadmin::class,
             'admin' => App\Http\Middleware\GerbangAdmin::class,
             'PasswordDefault' => App\Http\Middleware\GerbangPasswordDefault::class,
+            'sessionku' => App\Http\Middleware\GerbangSession::class,
+            'Semester' => App\Http\Middleware\GerbangSemester::class,
+            'AksesPegawai' => App\Http\Middleware\AksesPegawai::class,
+            'pegawai' => App\Http\Middleware\GerbangPegawai::class,
+            'wakadankepsek' => App\Http\Middleware\GerbangWaka::class,
+            
         ]);
+        $middleware->web([
+            App\Http\Middleware\GerbangSessionSociallite::class,
+        ]);
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

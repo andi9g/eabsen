@@ -11,7 +11,7 @@
             <flux:input
                 name="name"
                 :label="__('Name')"
-                :value="old('name')"
+                :value="old('name')??Session::get('socialite.name')"
                 type="text"
                 required
                 autofocus
@@ -23,7 +23,7 @@
             <flux:input
                 name="email"
                 :label="__('Email address')"
-                :value="old('email')"
+                :value="old('email')??Session::get('socialite.email')"
                 type="email"
                 required
                 autocomplete="email"

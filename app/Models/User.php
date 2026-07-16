@@ -24,6 +24,8 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $table = 'users';
     protected $primaryKey = 'iduser';
     protected $connection = 'mysql';
+
+    protected $with = ["socialite", "detailuser", "akses"];
         
     //protected $fillable = ['name1','name2'];
         
@@ -34,6 +36,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function detailuser()
     {
         return $this->hasOne(detailuserM::class, 'iduser', 'iduser');
+    }
+    public function socialite()
+    {
+        return $this->hasOne(socialiteM::class, 'iduser', 'iduser');
     }
     /**
      * Get the attributes that should be cast.

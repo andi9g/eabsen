@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('detailuser');
         Schema::create('detailuser', function (Blueprint $table) {
             $table->bigIncrements('iddetailuser');
             $table->unsignedBigInteger('iduser');
@@ -20,13 +21,14 @@ return new class extends Migration
             $table->timestamps();
         });
         
-        Schema::create('posisi', function (Blueprint $table) {
-            $table->bigIncrements('idposisi');
-            $table->unsignedBigInteger('iduser');
-            $table->enum('namaposisi', ['superadmin', 'admin', 'pegawai']);
-            $table->timestamps();
-        });
-
+        Schema::dropIfExists('posisi');
+        // Schema::create('posisi', function (Blueprint $table) {
+        //     $table->bigIncrements('idposisi');
+        //     $table->unsignedBigInteger('iduser');
+        //     $table->enum('namaposisi', ['superadmin', 'admin', 'pegawai']);
+        //     $table->timestamps();
+        // });
+Schema::dropIfExists('detinstansiailuser');
         Schema::create('instansi', function (Blueprint $table) {
             $table->bigIncrements('idinstansi');
             $table->string('namainstansi', 100);
@@ -36,7 +38,7 @@ return new class extends Migration
             $table->string('logo')->nullable();
             $table->timestamps();
         });
-
+Schema::dropIfExists('siswa');
         Schema::create('siswa', function (Blueprint $table) {
             $table->bigIncrements('idsiswa');
             $table->unsignedBigInteger('idkelas');
@@ -50,14 +52,14 @@ return new class extends Migration
             $table->string('hp', 100);
             $table->timestamps();
         });
-
+Schema::dropIfExists('kelas');
         Schema::create('kelas', function (Blueprint $table) {
             $table->bigIncrements('idkelas');
             $table->unsignedBigInteger('idinstansi');
             $table->string('namakelas', 10);
             $table->timestamps();
         });
-
+Schema::dropIfExists('jurusan');
         Schema::create('jurusan', function (Blueprint $table) {
             $table->bigIncrements('idjurusan');
             $table->unsignedBigInteger('idinstansi');
@@ -65,7 +67,7 @@ return new class extends Migration
             $table->string('inisialjurusan', 100);
             $table->timestamps();
         });
-
+Schema::dropIfExists('kartu');
         Schema::create('kartu', function (Blueprint $table) {
             $table->bigIncrements('idkartu');
             $table->unsignedBigInteger('idsiswa');
@@ -73,7 +75,7 @@ return new class extends Migration
             $table->char('uuid', 20);
             $table->timestamps();
         });
-
+Schema::dropIfExists('perangkat');
         Schema::create('perangkat', function (Blueprint $table) {
             $table->bigIncrements('idperangkat');
             $table->unsignedBigInteger('idinstansi');
@@ -81,13 +83,14 @@ return new class extends Migration
             $table->enum('fungsiperangkat', ['absen', 'register']);
             $table->timestamps();
         });
-
+Schema::dropIfExists('absensiswa');
         Schema::create('absensiswa', function (Blueprint $table) {
             $table->bigIncrements('idabsensiswa');
             $table->unsignedBigInteger('idinstansi');
             $table->unsignedBigInteger('idsiswa');
             $table->dateTime('waktumasuk');
             $table->dateTime('waktukeluar')->nullable();
+            $table->enum('status', ['a', 'h', 'i', 's']);
             $table->timestamps();
         });
 
