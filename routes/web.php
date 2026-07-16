@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Response;
     Route::get('/auth/redirect', [SocialiteC::class, 'socialite'])->name('auth.socialite');
     Route::get('/auth/google/callback', [SocialiteC::class, 'callback'])->name('auth.callback');
     
-    Route::get('/manifest.json', [PwaController::class, 'manifest'])->name('pwa.manifest');
+    // Route::get('/manifest.json', [PwaController::class, 'manifest'])->name('pwa.manifest');
 
     Route::middleware(['auth', 'verified', 'BuatAkses', 'PasswordDefault', "sessionku"])->group(function () {
         
