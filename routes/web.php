@@ -40,7 +40,7 @@ use Illuminate\Support\Facades\Response;
     
     // Route::get('/manifest.json', [PwaController::class, 'manifest'])->name('pwa.manifest');
 
-    Route::middleware(['auth', 'verified', 'BuatAkses', 'PasswordDefault', "sessionku"])->group(function () {
+    Route::middleware(['auth', 'verified', 'BuatAkses', "sessionku"])->group(function () {
         
         Route::view('dashboard', 'dashboard')->name('dashboard');
         Route::get('/auth/redirect/change', [SocialiteC::class, 'socialitechange'])->name('auth.socialite.change');
