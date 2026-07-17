@@ -17,8 +17,8 @@ Route::middleware(['auth', 'verified', "sessionku"])->group(function () {
     Route::livewire('settings/appearance', Appearance::class)->name('appearance.edit');
 
     Route::livewire('settings/security', Security::class)
-    ->middleware([
-        'password.confirm',
-    ])
+    // ->middleware([
+    //     'password.confirm',
+    // ])
     ->name('security.edit');
 });
