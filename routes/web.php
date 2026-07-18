@@ -37,7 +37,9 @@ use Illuminate\Support\Facades\Response;
    
     
     Route::get('link/daftar/{kode}', [pegawaiC::class, 'daftar'])->name('link.daftar');
-    Route::view('/', 'welcome')->name('home');
+    Route::get('/', function () {
+        return redirect('login');
+    })->name('home');
     
     Route::get('/auth/redirect', [SocialiteC::class, 'socialite'])->name('auth.socialite');
     Route::get('/auth/google/callback', [SocialiteC::class, 'callback'])->name('auth.callback');
