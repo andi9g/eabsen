@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Facades\Request;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,10 +23,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Carbon::setLocale('id');
-        // if (config('app.env') !== 'local' || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
-            URL::forceScheme('https');
-        // }
+        \Carbon\Carbon::setLocale('id');
+
+        // Cek apakah diakses via HTTPS (baik dari Cloudflare header atau deteksi bawaan server)
+        $isHttps = (
+            (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
+            (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] == 1)) ||
+            (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on')
+        );
+
+        if ($isHttps) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+            
+            // Trik penting untuk Livewire 3: beri tahu internal request Laravel bahwa ini HTTPS
+            request()->server->set('HTTPS', 'on');
+        }
     }
 
     /**
