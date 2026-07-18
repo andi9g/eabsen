@@ -9,8 +9,8 @@
                 <div class="flex items-center gap-4">
                     <flux:avatar size="lg" src="{{ url('/disk-s3/pwa/192/'.$instansi->logo, []) }}" />
                     <div>
-                        <flux:heading size="lg">Taylor Otwell</flux:heading>
-                        <flux:text>Creator of Laravel</flux:text>
+                        <flux:heading size="lg">Aplikasi Absensi Digital</flux:heading>
+                        <flux:text>{{ auth()->user()->detailuser->instansi->namainstansi??'Aplikasi PWA' }}</flux:text>
                     </div>
                 </div>
             </flux:callout>
