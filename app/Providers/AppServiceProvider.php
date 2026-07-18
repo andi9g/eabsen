@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
             (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] == 1)) ||
             (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on')
         );
+        dd($isHttps);
 
         if ($isHttps) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
