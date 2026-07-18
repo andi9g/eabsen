@@ -11,7 +11,11 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 
 
-    
+    if (app()->environment('local')) {
+        Route::post('/_boost/browser-logs', function () {
+            return response()->json(['status' => 'ignored']);
+        })->name("loger");
+    }
 
     
     Route::get('/disk-s3/{nama_file}', function ($namaFile) {
