@@ -42,7 +42,10 @@ class SiswaLive extends Component
                 ->orWhere("nisn", "like", "$this->search%")
                 ->orWhere("nis", "like", "$this->search%");
             });
-        })->when($this->idinstansi, function($query) {
+        })
+        ->whereHas("kelas")
+        ->whereHas("jurusan")
+        ->when($this->idinstansi, function($query) {
             $query->where("idinstansi",  $this->idinstansi);
         })->orderBy("namasiswa", "asc")
         ->paginate(15);

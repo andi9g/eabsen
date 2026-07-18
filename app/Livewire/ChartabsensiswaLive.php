@@ -24,7 +24,7 @@ class ChartabsensiswaLive extends Component
 
     public array $data = [];
     public $tanggal, $target;
-    public $dataArray, $values;
+    public $dataArray= [], $values;
 
 
     public function mount()
@@ -39,7 +39,10 @@ class ChartabsensiswaLive extends Component
             $this->dataArray[$item->idkelas] = siswaM::where([
                 "idinstansi" => $this->idinstansi,
                 "idkelas" => $item->idkelas,
-            ])->count();
+            ])
+            ->whereHas("kelas")
+            ->whereHas("jurusan")
+            ->count();
         }
 
         // dd($this->dataArray);

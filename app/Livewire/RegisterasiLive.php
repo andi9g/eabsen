@@ -57,6 +57,8 @@ class RegisterasiLive extends Component
                 ->orWhere("nisn", "like", "%".$this->search."%");
             });
         })
+        ->whereHas("kelas")
+        ->whereHas("jurusan")
         ->when($this->idkelas, function($query) {
             $query->where("idkelas", $this->idkelas);
         })

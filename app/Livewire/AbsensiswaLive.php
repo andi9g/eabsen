@@ -69,6 +69,8 @@ class AbsensiswaLive extends Component
     public function render()
     {
         $siswa = siswaM::where("idinstansi", $this->idinstansi)
+            ->whereHas("kelas")
+            ->whereHas("jurusan")
             ->when($this->idkelas, function ($query) {
                 $query->where("idkelas", $this->idkelas);
             })
