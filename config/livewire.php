@@ -1,7 +1,10 @@
 <?php
 
 return [
-
+    'asset_url' => $_SERVER['HTTP_HOST'] === 'abseniot.smkn1gunungkijang.sch.id' ? 'https://abseniot.smkn1gunungkijang.sch.id' : null,
+    
+    // Paksa endpoint internal Livewire selalu menggunakan HTTPS saat online
+    'update_route' => $_SERVER['HTTP_HOST'] === 'abseniot.smkn1gunungkijang.sch.id' ? 'https://abseniot.smkn1gunungkijang.sch.id/livewire/update' : null,
     // 'asset_url' => env('APP_URL', null),
     /*
     |---------------------------------------------------------------------------
