@@ -12,7 +12,7 @@
                 <form action="" wire:submit="updatelogo" class="space-y-3">
                     <flux:file-upload wire:model="photos" >
                         <flux:file-upload.dropzone wire:model="photos"
-                            heading="{{ empty($photos)?'Drop files or click to browse':$photos->getClientOriginalName() }}"
+                            heading="Drop files or click to browse"
                             text="JPG, PNG, GIF up to 10MB"
                             with-progress
                             inline
