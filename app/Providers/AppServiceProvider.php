@@ -26,31 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // // 1. Cek apakah request datang dari proxy/cloudflare dengan HTTPS
-        // // Cloudflare selalu mengirimkan header X-Forwarded-Proto
-        // if (Request::header('X-Forwarded-Proto') === 'https') {
-        //     URL::forceScheme('https');
-        // }
-        
-        // // 2. (Opsional) Jika Anda menggunakan Laravel 11, pastikan internal proxy di-trust 
-        // // agar header di atas terbaca dengan benar oleh Laravel
-        // if (isset($this->app['request'])) {
-        //     $this->app['request']->setTrustedProxies(
-        //         ['127.0.0.1', '::1'], // IP localhost/cloudflared tunnel
-        //         \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_FOR |
-        //         \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_PROTO |
-        //         \Symfony\Component\HttpFoundation\Request::HEADER_X_FORWARDED_HOST
-        //     );
-        // }
-        // Cek apakah request datang dari Cloudflare (https)
-        if (request()->header('X-Forwarded-Proto') === 'https') {
-            
-            // 1. Paksa Laravel menggunakan URL https
+        Carbon::setLocale('id');
+        if (config('app.env') !== 'local' || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
             URL::forceScheme('https');
-            
-            // 2. INI KUNCI UNTUK LIVEWIRE 3: 
-            // Paksa server state menjadi HTTPS 'on' agar Livewire tidak menggunakan http://
-            request()->server->set('HTTPS', 'on'); 
         }
     }
 

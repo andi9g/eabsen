@@ -2,7 +2,7 @@
 
 return [
 
-    'asset_url' => env('APP_URL', null),
+    // 'asset_url' => env('APP_URL', null),
     /*
     |---------------------------------------------------------------------------
     | Component Locations
