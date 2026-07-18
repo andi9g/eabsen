@@ -36,7 +36,7 @@ return [
             'serve' => true,
             'throw' => false,
             'report' => false,
-            'url' => url('/storage'),
+            // 'url' => url('/storage'),
         ],
 
         'public' => [
