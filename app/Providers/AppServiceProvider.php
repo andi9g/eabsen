@@ -34,9 +34,6 @@ class AppServiceProvider extends ServiceProvider
 
         if ($isHttps) {
             \Illuminate\Support\Facades\URL::forceScheme('https');
-            
-            // Trik penting untuk Livewire 3: beri tahu internal request Laravel bahwa ini HTTPS
-            request()->server->set('HTTPS', 'on');
         }
     }
 
