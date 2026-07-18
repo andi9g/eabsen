@@ -27,9 +27,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Carbon::setLocale('id');
-        if (config('app.env') !== 'local' || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+        // if (config('app.env') !== 'local' || isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
             URL::forceScheme('https');
-        }
+        // }
     }
 
     /**
