@@ -25,16 +25,8 @@ class AppServiceProvider extends ServiceProvider
     {
         \Carbon\Carbon::setLocale('id');
 
-        // Cek apakah diakses via HTTPS (baik dari Cloudflare header atau deteksi bawaan server)
-        $isHttps = (
-            (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') ||
-            (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] === 'on' || $_SERVER['HTTPS'] == 1)) ||
-            (isset($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] === 'on')
-        );
-        dd($isHttps);
-
-        if ($isHttps) {
-            \Illuminate\Support\Facades\URL::forceScheme('https');
+        if (request()->getHost() !== 'localhost') {
+            dd($_SERVER); 
         }
     }
 
