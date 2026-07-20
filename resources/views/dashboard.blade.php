@@ -1,6 +1,7 @@
 <x-layouts::app :title="__('Dashboard')">
     @php
         $akses = auth()->user()->akses->akses;
+        
     @endphp
     @if ($akses == 'kepsek' || $akses == 'pegawai' || $akses == 'waka' || $akses == 'admin')
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">

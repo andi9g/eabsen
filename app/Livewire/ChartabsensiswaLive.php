@@ -58,12 +58,12 @@ class ChartabsensiswaLive extends Component
             $a = 0;
             $this->values[$idkelas][] = 0;
             foreach ($ket as $key => $status) {
-                $absen = absensiswaM::where([
-                    "idinstansi" => $this->idinstansi,
-                    "tanggal" => $this->tanggal,
-                ])->whereHas("siswa", function ($q) use ($idkelas) {
+                $absen = absensiswaM::where("idinstansi", $this->idinstansi)
+                ->whereDate("tanggal", $this->tanggal)
+                ->whereHas("siswa", function ($q) use ($idkelas) {
                     $q->where("idkelas", $idkelas);
-                })->where("status", $key);
+                })->where("status", $key)
+                ->distinct('idsiswa');
 
                 $jumlah = $absen->count();
                 if($key != "a") {
