@@ -35,9 +35,11 @@
             </div>
             @foreach ($siswa as $item)
             @php
+                // dd($item->absensiswa->first()?->status ?? 'a' );
                 $status = $data[$item->idsiswa] ?? 'a';
                 $terlambat = false;
                 
+                // dd($status);
                 if($status == "h") {
                     $jamseharusnya = strtotime("+2 minutes", strtotime($tanggal." ".$jammasuk));
                     $jamabsen = strtotime($item->absensiswa->where("tanggal", $tanggal)->first()->waktumasuk??"");
@@ -59,7 +61,7 @@
                 };
                 $data["84"] = "s";
             @endphp
-                <flux:kanban.card>
+                <flux:kanban.card wire:key="{{ $item->idsiswa }}">
                     <div class="flex items-center">
                         <div class="flex-col">
                             <flux:heading>{{ $item->namasiswa }}
@@ -72,14 +74,14 @@
                             
                         </div>
                         <div class="ml-auto flex-row space-y-2">
-                            <flux:select size="sm" wire:model.live="data.{{ $item->idsiswa }}" wire:key="{{ $item->idsiswa }}" style="background-color: {{ $bg }}; color: {{ $text }}; font-weight: bold;">
+                            <flux:select size="sm" wire:change="changeState({{ $item->idsiswa }}, $event.target.value)"  style="background-color: {{ $bg }}; color: {{ $text }}; font-weight: bold;">
                                 
                                 
                                 >
-                                <flux:select.option value="a">Alpha</flux:select.option>
-                                <flux:select.option value="h">Hadir</flux:select.option>
-                                <flux:select.option value="i">Izin</flux:select.option>
-                                <flux:select.option value="s">Sakit</flux:select.option>
+                                <flux:select.option value="a" :selected="$status=='a'">Alpha</flux:select.option>
+                                <flux:select.option value="h" :selected="$status=='h'">Hadir</flux:select.option>
+                                <flux:select.option value="i" :selected="$status=='i'">Izin</flux:select.option>
+                                <flux:select.option value="s" :selected="$status=='s'">Sakit</flux:select.option>
                             </flux:select>
                         </div>
                     </div>

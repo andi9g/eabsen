@@ -25,7 +25,7 @@ class AbsensiswaLive extends Component
     #[Locked]
     public $idinstansi, $idsemester, $kelas, $jurusan, $jammasuk, $keterlambatan;
 
-    public $data;
+    public $data, $dataUpdate;
     public $datatampil, $tampil;
     public $search, $idkelas, $idjurusan, $tanggal;
 
@@ -68,6 +68,7 @@ class AbsensiswaLive extends Component
 
     public function render()
     {
+        
         $siswa = siswaM::where("idinstansi", $this->idinstansi)
             ->whereHas("kelas")
             ->whereHas("jurusan")
@@ -86,6 +87,7 @@ class AbsensiswaLive extends Component
             ->orderBy("namasiswa", "asc")
             ->paginate($this->tampil);
 
+            $this->validasi($siswa->first()->idsiswa);
         return view('livewire.absensiswa-live', [
             'siswa' => $siswa,
         ]);
@@ -94,14 +96,16 @@ class AbsensiswaLive extends Component
     public function saveChanges()
     {
         $dataUpdate = [];
-        foreach ($this->data as $idsiswa => $status) {
-            $dataUpdate[] = [
-                'idinstansi' => $this->idinstansi,
-                'idsiswa' => $idsiswa,
-                'tanggal' => $this->tanggal,
-                'waktumasuk' => now(),
-                'status' => $status,
-            ];
+        foreach ($this->dataUpdate as $idsiswa => $status) {
+            if($this->validasi($idsiswa)) {
+                $dataUpdate[] = [
+                    'idinstansi' => $this->idinstansi,
+                    'idsiswa' => $idsiswa,
+                    'tanggal' => $this->tanggal,
+                    'waktumasuk' => now(),
+                    'status' => $status,
+                ];
+            }
         }
         // dd($dataUpdate);
         
@@ -110,7 +114,22 @@ class AbsensiswaLive extends Component
             ['idinstansi', 'idsiswa', 'tanggal'],
             ['waktumasuk', 'status']
         );
-
+        $this->dataUpdate = [];
         LivewireAlert::title('Success')->success()->show();
+    }
+
+    public function changeState($idsiswa, $value)
+    {
+        $this->data[$idsiswa] = $value;
+        $this->dataUpdate[$idsiswa] = $value;
+    }
+
+    protected function validasi($idsiswa):bool
+    {
+        $siswa = siswaM::where([
+            "idinstansi" => $this->idinstansi,
+            "idsiswa" => $idsiswa,
+        ])->exists();
+        return $siswa;
     }
 }
