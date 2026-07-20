@@ -59,11 +59,7 @@ class AbsensiswaLive extends Component
         ->where('tanggal', $tanggal)
         ->pluck('status', 'idsiswa')
         ->toArray();
-        dd(
-            absensiswaM::where('idinstansi', $this->idinstansi)
-                ->where('tanggal', $tanggal)
-                ->get()
-        );
+        
     }
 
     public function pilihtanggal()
