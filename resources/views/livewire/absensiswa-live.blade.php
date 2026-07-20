@@ -39,7 +39,7 @@
                 $status = $data[$item->idsiswa] ?? 'a';
                 $terlambat = false;
                 
-                if($item->namasiswa == "Celsiani") {
+                if($status == "s") {
                     dd($status, $item->idsiswa, $data, $tanggal);
                 }
                 // dd($status);
