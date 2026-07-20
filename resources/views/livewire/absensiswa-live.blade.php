@@ -39,6 +39,9 @@
                 $status = $data[$item->idsiswa] ?? 'a';
                 $terlambat = false;
                 
+                if($item->namasiswa == "Celsiani") {
+                    dd($status);
+                }
                 // dd($status);
                 if($status == "h") {
                     $jamseharusnya = strtotime("+2 minutes", strtotime($tanggal." ".$jammasuk));
