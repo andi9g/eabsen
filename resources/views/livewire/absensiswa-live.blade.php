@@ -39,9 +39,6 @@
                 $status = $data[$item->idsiswa] ?? 'a';
                 $terlambat = false;
                 
-                if($status == "s") {
-                    dd($status, $item->idsiswa, $data, $tanggal);
-                }
                 // dd($status);
                 if($status == "h") {
                     $jamseharusnya = strtotime("+2 minutes", strtotime($tanggal." ".$jammasuk));
@@ -62,9 +59,8 @@
                     'i', 's' => '#1d1f03',
                     default => '#1d1f03',
                 };
-                $data["84"] = "s";
             @endphp
-                <flux:kanban.card wire:key="data-{{ uniqid() }}">
+                <flux:kanban.card wire:key="data-{{ $item->idsiswa }}">
                     <div class="flex items-center">
                         <div class="flex-col">
                             <flux:heading>{{ $item->namasiswa }}

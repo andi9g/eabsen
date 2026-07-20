@@ -59,7 +59,6 @@ class AbsensiswaLive extends Component
         ->where('tanggal', $tanggal)
         ->pluck('status', 'idsiswa')
         ->toArray();
-        
     }
 
     public function pilihtanggal()
@@ -108,14 +107,14 @@ class AbsensiswaLive extends Component
                 ];
             }
         }
-        dd($this->data);
+        // dd($dataUpdate);
         
         absensiswaM::upsert(
             $dataUpdate,
             ['idinstansi', 'idsiswa', 'tanggal'],
             ['waktumasuk', 'status']
         );
-        $this->dataUpdate = [];
+        
         LivewireAlert::title('Success')->success()->show();
     }
 
