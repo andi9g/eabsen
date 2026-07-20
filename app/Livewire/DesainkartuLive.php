@@ -73,7 +73,7 @@ Kartu wajib dibawa saat menghadiri kegiatan resmi.",
             $this->tampil = true;
             $detail = $desainkartu->first()->detaildesainkartu()?->first()?->toArray()??[];
             $this->detaildesainkartu = array_merge($this->detaildesainkartu, $detail);
-            $deskripsi = $desainkartu->first()->deskripsikartu()->select("judul", "deskripsi")?->first()?->toArray();
+            $deskripsi = $desainkartu->first()->deskripsikartu()->select("judul", "deskripsi")?->first()?->toArray()??[];
             $this->deskripsi = array_merge($this->deskripsi, $deskripsi);
             $desain = $desainkartu->first();
 
