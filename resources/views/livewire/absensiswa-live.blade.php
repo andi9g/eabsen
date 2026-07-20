@@ -40,7 +40,7 @@
                 $terlambat = false;
                 
                 if($item->namasiswa == "Celsiani") {
-                    dd($status);
+                    dd($status, $item->idsiswa, $data);
                 }
                 // dd($status);
                 if($status == "h") {
