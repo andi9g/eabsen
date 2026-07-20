@@ -111,9 +111,9 @@ class InstansiLive extends Component
         ->scale(height:512);
 
         $imagepwa192 = Image::decode($file)
-        ->cover(192, 192);
+        ->contain(192, 192);
         $imagepwa512 = Image::decode($file)
-        ->cover(512, 512);
+        ->contain(512, 512);
 
         Storage::disk("s3")->put(
             $path,
