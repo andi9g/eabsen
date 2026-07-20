@@ -107,7 +107,7 @@ class AbsensiswaLive extends Component
                 ];
             }
         }
-        // dd($dataUpdate);
+        dd($this->data);
         
         absensiswaM::upsert(
             $dataUpdate,
