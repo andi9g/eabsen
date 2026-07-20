@@ -61,7 +61,7 @@
                 };
                 $data["84"] = "s";
             @endphp
-                <flux:kanban.card wire:key="{{ $item->idsiswa }}">
+                <flux:kanban.card wire:key="data-{{ uniqid() }}">
                     <div class="flex items-center">
                         <div class="flex-col">
                             <flux:heading>{{ $item->namasiswa }}
