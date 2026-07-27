@@ -60,22 +60,38 @@
                                             </div> --}}
                                             <div class="profile-wrapper">
                                                 <center>
-                                                    <img 
-                                                    @if (empty($data['foto']))
-                                                        src="{{ Storage::disk('s3')->temporaryUrl('profil.png', now()->addMinutes(10)) }}"
-                                                        @else
-                                                        src="{{ Storage::disk('s3')->temporaryUrl($data['foto'], now()->addMinutes(10)) }}"
-                                                    @endif
-                                                    
-                                                    style="
+                                                    <!-- Bingkai luar ukuran mati 100px -->
+                                                    <div style="
                                                         width: 100px;
                                                         height: 100px;
+                                                        overflow: hidden; /* Memotong gambar yang melebihi bingkai */
+                                                        position: relative;
+                                                        display: inline-block;
                                                         border-radius: {{ $detaildesainkartu['radiusborder'] }}px;
                                                         -webkit-border-radius: {{ $detaildesainkartu['radiusborder'] }}px;
                                                         border: {{ $detaildesainkartu['tebalborder'] }}px solid {!! $detaildesainkartu['warnaborder'] !!};
-                                                        object-fit: cover;
-                                                        object-position: top center;
                                                     ">
+                                                        
+                                                        <img 
+                                                            @if (empty($data['foto']))
+                                                                src="{{ Storage::disk('s3')->temporaryUrl('profil.png', now()->addMinutes(10)) }}"
+                                                            @else
+                                                                src="{{ Storage::disk('s3')->temporaryUrl($data['foto'], now()->addMinutes(10)) }}"
+                                                            @endif
+                                                            
+                                                            style="
+                                                                position: absolute;
+                                                                top: 0;          /* Mengunci posisi gambar di paling ATAS bingkai */
+                                                                left: 50%;       /* Menggeser titik awal ke TENGAH bingkai secara horizontal */
+                                                                transform: translateX(-50%); /* Menarik gambar kembali ke tengah agar seimbang */
+                                                                -webkit-transform: translateX(-50%); /* Dukungan untuk engine Dompdf */
+                                                                
+                                                                /* Mengunci dimensi agar gambar tidak gepeng */
+                                                                height: 100%;    
+                                                                width: auto;     
+                                                            "
+                                                        >
+                                                    </div>
                                                 </center>
                                             </div>
                                             <div class="card-body" style="color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}">
