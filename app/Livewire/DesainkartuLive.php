@@ -127,10 +127,10 @@ Kartu wajib dibawa saat menghadiri kegiatan resmi.",
             // ]);
 
             if($this->photo) {
-                $this->detaildesainkartu['gambardepan'] = $this->imageCompresh($this->photo, 500, 'desainkartu');
+                $this->detaildesainkartu['gambardepan'] = $this->imageCompresh($this->photo, 1000, 'desainkartu');
             }
             if($this->photo2) {
-                $this->detaildesainkartu['gambarbelakang'] = $this->imageCompresh($this->photo2, 500, 'desainkartu');
+                $this->detaildesainkartu['gambarbelakang'] = $this->imageCompresh($this->photo2, 1000, 'desainkartu');
             }
 
         }
@@ -165,13 +165,12 @@ Kartu wajib dibawa saat menghadiri kegiatan resmi.",
 
     public function imageCompresh($file, int $width, $folder): string
     {
-        $quality = 100;
+        $quality = 92;
 
         $filename = uniqid() . '.' . $file->getClientOriginalExtension();
         $path = "$folder/$filename";
 
-        $image = Image::decode($file)
-        ->scale(width:$width);
+        $image = Image::decode($file);
 
         Storage::disk("s3")->put(
             $path,

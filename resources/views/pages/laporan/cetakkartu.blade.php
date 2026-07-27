@@ -34,16 +34,27 @@
                                 <tr>
                                     <td>
                                         <div class="card card-front" style="
-                                            color:{!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!};
-                                            @if($detaildesainkartu['desainkartu'] == 'gambar')
-                                                background-image: url({{ Storage::disk('s3')->temporaryUrl($detaildesainkartu['gambardepan']??'profil.png', now()->addMinutes(10)) }});
-                                                background-size: cover;
-                                                background-position: center;
-                                                background-repeat: no-repeat;
-                                            @else
-                                                background-color: {!! $detaildesainkartu['warnadepan']??'#1a365d' !!} !important;
+                                            position: relative; /* Wajib agar gambar absolut tidak keluar dari card */
+                                            overflow: hidden;   /* Memastikan gambar tidak tumpah jika ukurannya lebih besar */
+                                            color: {!! $detaildesainkartu['warnatextdepan'] ?? '#ffffff' !!};
+                                            @if($detaildesainkartu['desainkartu'] != 'gambar')
+                                                background-color: {!! $detaildesainkartu['warnadepan'] ?? '#1a365d' !!} !important;
                                             @endif
                                         ">
+                                            {{-- JIKA DESAIN ADALAH GAMBAR, RENDER SEBAGAI IMG ABSOLUT --}}
+                                            @if($detaildesainkartu['desainkartu'] == 'gambar')
+                                                <img src="{{ Storage::disk('s3')->temporaryUrl($detaildesainkartu['gambardepan'] ?? 'profil.png', now()->addMinutes(10)) }}" 
+                                                    style="
+                                                        position: absolute; 
+                                                        top: 0; 
+                                                        left: 0; 
+                                                        width: 100%; 
+                                                        height: 100%; 
+                                                        object-fit: cover; /* Efeknya sama seperti background-size: cover */
+                                                        z-index: -1;       /* Memastikan gambar berada di bawah teks */
+                                                    ">
+                                            @endif
+
                                             {{-- <div class="card-header">
                                                 {{ $data["instansi"] }}
                                             </div> --}}
@@ -114,15 +125,26 @@
                                     </td>
         
                                     <td>
-                                        <div class="card card-back" style="@if($detaildesainkartu['desainkartu'] == 'gambar')
-                                                background-image: url({{ Storage::disk('s3')->temporaryUrl($detaildesainkartu['gambarbelakang']??'profil.png', now()->addMinutes(10)) }});
-                                                background-size: cover;
-                                                background-position: center;
-                                                background-repeat: no-repeat;
-                                            @else
-                                                background-color: {!! $detaildesainkartu['warnabelakang']??'#2b6cb0' !!} !important;
+                                        <div class="card card-back" style="
+                                            position: relative; /* Wajib agar gambar tetap di dalam area kartu */
+                                            overflow: hidden;   /* Memotong gambar jika melebihi ukuran kartu */
+                                            @if($detaildesainkartu['desainkartu'] != 'gambar')
+                                                background-color: {!! $detaildesainkartu['warnabelakang'] ?? '#2b6cb0' !!} !important;
                                             @endif
                                         ">
+                                            {{-- JIKA DESAIN ADALAH GAMBAR, RENDER SEBAGAI IMG ABSOLUT --}}
+                                            @if($detaildesainkartu['desainkartu'] == 'gambar')
+                                                <img src="{{ Storage::disk('s3')->temporaryUrl($detaildesainkartu['gambarbelakang'] ?? 'profil.png', now()->addMinutes(10)) }}" 
+                                                    style="
+                                                        position: absolute; 
+                                                        top: 0; 
+                                                        left: 0; 
+                                                        width: 100%; 
+                                                        height: 100%; 
+                                                        object-fit: cover; /* Pengganti background-size: cover */
+                                                        z-index: -1;       /* Menaruh gambar di posisi paling belakang */
+                                                    ">
+                                            @endif
                                            <div class="card-back-content" style="color: {!! $detaildesainkartu['warnatextbelakang'] !!}">
                                                 <div class="terms-title">{!! $deskripsi["judul"] !!}</div>
                                                 {{-- <ol class="terms-list"> --}}

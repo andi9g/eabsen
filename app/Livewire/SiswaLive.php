@@ -75,6 +75,7 @@ class SiswaLive extends Component
             LivewireAlert::title('error')->error()->show();
             return;
         }
+        $this->data = [];
         
         $this->data['idsiswa'] = $idsiswa;
         $this->data['foto'] = reset($siswa);
@@ -91,7 +92,7 @@ class SiswaLive extends Component
         ]);
 
         $this->reset('gambar');
-        Flux::modals()->close();
+        // Flux::modals()->close();
     }
 
    
