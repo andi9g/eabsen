@@ -41,6 +41,8 @@ class superadminC extends Controller
             'warnatextdepan' => '#ffffff',
             'warnatextbelakang' => '#ffffff',
             'warnaborder' => '#ffffff',
+            'ganjil' => 'rgba(255, 255, 255, 0.1)',
+            'genap' => 'rgba(255, 255, 255, 0.05)',
             'tebalborder' => 3,
             'radiusborder' => 50,
             'gambardepan' => 'profil.png',

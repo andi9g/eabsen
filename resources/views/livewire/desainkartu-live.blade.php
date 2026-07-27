@@ -42,7 +42,9 @@
                             </div>
                              <flux:color-picker label="Warna Text Depan" wire:model.live.throttle.500ms="detaildesainkartu.warnatextdepan" type="button" />
                              <flux:input wire:model.live.throttle.500ms="detaildesainkartu.tebalborder" label="Tebal Border Profil" type="number" kbd="Pixel" />
+                             <flux:color-picker label="Warna Border" wire:model.live.throttle.500ms="detaildesainkartu.warnaborder" type="button" />
                              <flux:slider min="0" max="50" label="Bingkai Profil" wire:model.live.throttle.500ms="detaildesainkartu.radiusborder"/>
+                            
                              
                              <flux:pillbox variant="combobox" multiple max="4" placeholder="Choose skills..." wire:model.live="pillbox" label="Informasi Umum">
                                 <flux:pillbox.option value="jurusan" wire:key="jurusan">jurusan</flux:pillbox.option>
@@ -52,6 +54,9 @@
                                 <flux:pillbox.option value="agama" wire:key="agama">agama</flux:pillbox.option>
                                 <flux:pillbox.option value="TTL" wire:key="TTL">TTL</flux:pillbox.option>
                             </flux:pillbox>
+
+                             <flux:color-picker label="Warna Tabel 1" wire:model.live.throttle.500ms="detaildesainkartu.genap" type="button" format="rgba" />
+                             <flux:color-picker label="Warna Tabel 2" wire:model.live.throttle.500ms="detaildesainkartu.ganjil" type="button" format="rgba" />
          
                     </div>
                 </flux:card>
@@ -137,7 +142,7 @@
                                                         height: 100px;
                                                         border-radius: {{ $detaildesainkartu['radiusborder'] }}px;
                                                         -webkit-border-radius: {{ $detaildesainkartu['radiusborder'] }}px;
-                                                        border: {{ $detaildesainkartu['tebalborder'] }}px solid #ffffff;
+                                                        border: {{ $detaildesainkartu['tebalborder'] }}px solid {!! $detaildesainkartu['warnaborder'] !!};
                                                         object-fit: cover;
                                                         object-position: top center;
                                                     ">
@@ -145,12 +150,12 @@
                                             </div>
                                             <div class="card-body" style="color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}">
                                                 <div class="user-name">Nama Lengkap</div>
-                                                <div class="user-nisn">1234567890</div>
+                                                <div class="user-nisn" style="color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}">1234567890</div>
                                                 <div class="classuntukrapikan" style="margin-top: 15px; text-align: center;">
-                                                    <table style="width: 85%; margin: 0 auto; border-collapse: collapse; font-size: 9px; color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}; background-color: rgba(255, 255, 255, 0.05); border-radius: 4px; overflow: hidden;">
+                                                    <table style="width: 85%; margin: 0 auto; border-collapse: collapse; font-size: 9px; color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}; background-color: {{ $detaildesainkartu['genap'] }}; border-radius: 4px; overflow: hidden;">
                                                         @foreach ($pillbox as $item)
                                                         <tr valign="top" @if ($loop->iteration %2 == 1)
-                                                            style="background-color: rgba(255, 255, 255, 0.1);"
+                                                            style="background-color: {{ $detaildesainkartu['ganjil'] }};"
                                                         @endif>
                                                             <th style="padding: 5px 8px; text-align: left; font-weight: bold; width:5px;">{{ ucfirst($item) }}</th>
                                                             <td style="padding: 5px 8px; text-align: left;">none</td>
@@ -163,7 +168,7 @@
                                                 
                                             </div>
                                             <div class="card-footer">
-                                                www.domainanda.com
+                                                {{-- www.domainanda.com --}}
                                             </div>
                                         </div>
                                     </td>
@@ -184,14 +189,16 @@
                                                 background-color: {!! $detaildesainkartu['warnabelakang']??'#2b6cb0' !!} !important;
                                             @endif
                                         ">
-                                            <div class="card-back-content">
+                                            <div class="card-back-content" style="color: {!! $detaildesainkartu['warnatextbelakang'] !!}">
                                                 <div class="terms-title">{!! $deskripsi["judul"] !!}</div>
                                                 {{-- <ol class="terms-list"> --}}
-                                                    {!! $deskripsi["deskripsi"] !!}
+                                                    <div class="" style="margin-top: -10px">
+                                                        {!! $deskripsi["deskripsi"] !!}
+                                                    </div>
                                                 {{-- </ol> --}}
                                             </div>
                                             <div class="card-footer">
-                                                www.domainanda.com
+                                                {{-- www.domainanda.com --}}
                                             </div>
                                         </div>
                                     </td>
@@ -280,7 +287,8 @@
 
         .profile-wrapper {
             text-align: center;
-            margin: 20px 0px;
+            margin-top: 23px;
+            margin-bottom: 10px;
         }
 
         /* Foto profil bulat */
@@ -291,7 +299,7 @@
 
         .card-body {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 10px;
             padding: 0 10px;
         }
 

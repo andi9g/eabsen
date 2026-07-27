@@ -20,7 +20,9 @@ class detaildesainkartuM extends Model
         'warnatextbelakang',
         'warnaborder',
         'tebalborder',
-        'radiusborder'
+        'radiusborder',
+        'ganjil',
+        'genap'
     ];
     protected $connection = 'mysql';
         

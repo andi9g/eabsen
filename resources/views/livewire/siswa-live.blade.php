@@ -1,4 +1,44 @@
 <div>
+
+    
+    <flux:modal name="modal-gambar" class="md:w-lg">
+        <form wire:submit="updategambar" class="space-y-6">
+            <div>
+                <flux:heading size="lg">Gambar Siswa</flux:heading>
+                <flux:text class="mt-2">Silahkan lengkapi form dibawah ini.</flux:text>
+            </div>
+
+            <center>
+                @if (!empty($data['foto']))
+                    <img src="{{ Storage::disk('s3')->temporaryUrl($data['foto'], now()->addMinutes(10)) }}" alt="Foto Profil">
+                @endif
+            </center>
+            <flux:file-upload wire:model="gambar" label="Upload file">
+                <flux:file-upload.dropzone heading="Drop file here or click to browse" text="JPG, PNG, GIF up to 2MB" />
+            </flux:file-upload>
+        
+            <div class="mt-3 flex flex-col gap-2">
+                @if ($gambar)
+                    <flux:file-item
+                        :heading="$gambar->getClientOriginalName()"
+                        :image="$gambar->temporaryUrl()"
+                        :size="$gambar->getSize()"
+                    >
+                        <x-slot name="actions">
+                            <flux:file-item.remove wire:click="removenamafungsi" aria-label="{{ 'Remove file: ' . $gambar->getClientOriginalName() }}" />
+                        </x-slot>
+                    </flux:file-item>
+                @endif
+            </div>
+            
+    
+            <div class="flex">
+                <flux:spacer />
+    
+                <flux:button type="submit" variant="primary">Update</flux:button>
+            </div>
+        </form>
+    </flux:modal>
     
     <flux:modal name="buttontambahsiswa" class="md:w-lg">
         <form wire:submit="tambahdata" class="space-y-4">
@@ -62,6 +102,7 @@
                 <flux:table.column>Nama Siswa</flux:table.column>
                 <flux:table.column>JK</flux:table.column>
                 <flux:table.column>Rombel</flux:table.column>
+                <flux:table.column>Foto</flux:table.column>
                 <flux:table.column>action</flux:table.column>
             </flux:table.columns>
         
@@ -72,6 +113,13 @@
                     <flux:table.cell>{{ $item->namasiswa }}</flux:table.cell>
                     <flux:table.cell>{{ $item->jk }}</flux:table.cell>
                     <flux:table.cell>{{ $item->kelas->namakelas." ".$item->jurusan->inisialjurusan }}</flux:table.cell>
+                    <flux:table.cell>
+                        @if (empty($item->foto))
+                            <flux:badge as="button" variant="pill" icon="x-circle" color="red" wire:click="bukagambar({{ json_encode($item->pluck('foto', 'idsiswa')->toArray()) }})">Tambah Gambar</flux:badge>
+                        @else
+                            <flux:badge as="button" variant="pill" icon="check" color="green" wire:click="bukagambar({{ json_encode($item->pluck('foto', 'idsiswa')->toArray()) }})">Update Gambar</flux:badge>
+                        @endif
+                    </flux:table.cell>
                     <flux:table.cell>
                         <flux:badge as="button" variant="pill" icon="pencil-square" color="blue" wire:click="buttonupdatesiswa({{ $item->idsiswa }})">edit</flux:badge>
                         <flux:badge as="button" variant="pill" icon="trash" color="red" wire:click="buttonhapus({{ $item->idsiswa }})">edit</flux:badge>

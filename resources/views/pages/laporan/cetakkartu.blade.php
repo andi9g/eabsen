@@ -61,7 +61,7 @@
                                                         height: 100px;
                                                         border-radius: {{ $detaildesainkartu['radiusborder'] }}px;
                                                         -webkit-border-radius: {{ $detaildesainkartu['radiusborder'] }}px;
-                                                        border: {{ $detaildesainkartu['tebalborder'] }}px solid #ffffff;
+                                                        border: {{ $detaildesainkartu['tebalborder'] }}px solid {!! $detaildesainkartu['warnaborder'] !!};
                                                         object-fit: cover;
                                                         object-position: top center;
                                                     ">
@@ -69,9 +69,9 @@
                                             </div>
                                             <div class="card-body" style="color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}">
                                                 <div class="user-name">{{ ucwords(strtolower($data['namasiswa']??'')) }}</div>
-                                                <div class="user-nisn">{{ $data['nisn'] }}</div>
+                                                <div class="user-nisn" style="color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}">{{ $data['nisn'] }}</div>
                                                 <div class="classuntukrapikan" style="margin-top: 15px; text-align: center;">
-                                                    <table style="width: 85%; margin: 0 auto; border-collapse: collapse; font-size: 9px; color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}; background-color: rgba(255, 255, 255, 0.05); border-radius: 4px; overflow: hidden;">
+                                                    <table style="width: 85%; margin: 0 auto; border-collapse: collapse; font-size: 9px; color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}; {{ $detaildesainkartu['genap'] }}; border-radius: 4px; overflow: hidden;">
                                                         @foreach ($pillbox as $item)
                                                         @if ($item == "jurusan")
                                                             @php
@@ -95,7 +95,7 @@
                                                             @endphp
                                                         @endif
                                                         <tr valign="top" @if ($loop->iteration %2 == 1)
-                                                            style="background-color: rgba(255, 255, 255, 0.1);"
+                                                            style="background-color: {{ $detaildesainkartu['ganjil'] }};"
                                                         @endif>
                                                             <th style="padding: 5px 8px; text-align: left; font-weight: bold; width:5px;">{{ ucfirst($item) }}</th>
                                                             <td style="padding: 5px 8px; text-align: left;">{{ $pill }}</td>
@@ -108,7 +108,7 @@
                                                 
                                             </div>
                                             <div class="card-footer">
-                                                www.domainanda.com
+                                                {{-- www.domainanda.com --}}
                                             </div>
                                         </div>
                                     </td>
@@ -123,14 +123,14 @@
                                                 background-color: {!! $detaildesainkartu['warnabelakang']??'#2b6cb0' !!} !important;
                                             @endif
                                         ">
-                                            <div class="card-back-content">
+                                           <div class="card-back-content" style="color: {!! $detaildesainkartu['warnatextbelakang'] !!}">
                                                 <div class="terms-title">{!! $deskripsi["judul"] !!}</div>
                                                 {{-- <ol class="terms-list"> --}}
                                                     {!! $deskripsi["deskripsi"] !!}
                                                 {{-- </ol> --}}
                                             </div>
                                             <div class="card-footer">
-                                                www.domainanda.com
+                                                {{-- www.domainanda.com --}}
                                             </div>
                                         </div>
                                     </td>

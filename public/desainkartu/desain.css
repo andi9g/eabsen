@@ -82,7 +82,8 @@
 
         .profile-wrapper {
             text-align: center;
-            margin: 20px 0px;
+            margin-top: 23px;
+            margin-bottom: 10px;
         }
 
         /* Foto profil bulat */
@@ -110,7 +111,7 @@
 
         /* --- ISI KONTEN KARTU BELAKANG --- */
         .card-back-content {
-            padding: 20px 15px;
+            padding: 10px 15px;
             font-size: 9px;
             line-height: 1.4;
         }
@@ -141,4 +142,27 @@
 
         .tabel-tengah {
             display: flex;
+        }
+
+        br {
+            padding: 0;
+            margin: 0;
+        }
+        ul {
+            list-style-type: disc;
+             padding: 0 7px;       /* Menghilangkan jarak dalam (penyebab menjorok) */
+             margin:0;
+             margin-top: -15px;
+            
+        }
+        ol {
+            list-style-type: decimal;
+             padding: 0 7px;       /* Menghilangkan jarak dalam (penyebab menjorok) */
+             margin:0; 
+             margin-top: -15px;
+        }
+        li {
+            margin-left: 15px;
+             padding: 0;       /* Menghilangkan jarak dalam (penyebab menjorok) */
+            margin-bottom: -20px;
         }

@@ -15,15 +15,28 @@ use App\Models\siswaM;
 use App\Models\kelasM;
 use App\Models\jurusanM;
 
+ use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use Intervention\Image\Laravel\Facades\Image;
+
 
 class SiswaLive extends Component
 {
+    use WithFileUploads;
     use WithPagination;
+
+    // #[Validate('image|max:2000')] 
+   
+
     #[Locked]
     public $idinstansi;
 
     public $data, $kelas, $jurusan;
     public $search, $update;
+
+    #[Validate('image|max:2000', message: 'File harus berupa gambar maksimal 2MB')]
+    public $gambar; 
 
     public function mount()
     {
@@ -31,7 +44,7 @@ class SiswaLive extends Component
         $this->update = false;
         $this->kelas = kelasM::where("idinstansi", $this->idinstansi)->get();
         $this->jurusan = jurusanM::where("idinstansi", $this->idinstansi)->get();
-
+        $this->gambar='';
     }
 
     public function render()
@@ -55,6 +68,53 @@ class SiswaLive extends Component
         ]);
     }
 
+    public function bukagambar(array $siswa)
+    {
+        $idsiswa = array_key_first($siswa);
+        if ($this->validasi($idsiswa)) {
+            LivewireAlert::title('error')->error()->show();
+            return;
+        }
+        
+        $this->data['idsiswa'] = $idsiswa;
+        $this->data['foto'] = reset($siswa);
+        Flux::modal('modal-gambar')->show();
+        
+    }
+
+    public function updategambar()
+    {
+        $path = $this->imageCompresh($this->gambar);
+        $this->data["foto"] = $path;
+        siswaM::where("idsiswa", $this->data["idsiswa"])->update([
+            "foto" => $this->data["foto"],
+        ]);
+
+        $this->reset('gambar');
+        Flux::modals()->close();
+    }
+
+   
+    
+    public function imageCompresh($file): string
+    {
+        $quality = 75;
+        $folder = 'profil/siswa';
+    
+        $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+        $path = "$folder/$filename";
+    
+        $image = Image::decode($file)
+        ->scale(height:300);
+    
+        Storage::disk("s3")->put(
+            $path,
+            $image->encodeUsingFileExtension($file->getClientOriginalExtension(), quality: $quality)
+        );
+    
+        return $path;
+    }
+
     public function buttonhapus($idsiswa)
     {
         if($this->validasi($idsiswa)) {
@@ -68,6 +128,11 @@ class SiswaLive extends Component
             ->withCancelButton('Cancel')
             ->onConfirm('hapussiswa', ['idsiswa' => $idsiswa])
             ->show();
+    }
+
+    public function removenamafungsi()
+    {
+        $this->gambar ='';
     }
 
     public function buttontambahsiswa()
@@ -99,6 +164,7 @@ class SiswaLive extends Component
         $this->resetValidation();
         Flux::modal('buttontambahsiswa')->show();
     }
+
 
     public function tambahdata()
     {
