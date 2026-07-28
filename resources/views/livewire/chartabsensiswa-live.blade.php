@@ -1,8 +1,12 @@
 <div class="grid auto-rows-min gap-4 md:grid-cols-3">
     @foreach ($dataArray as $key => $item)
-        {{-- {{ dd($data) }} --}}
+    @php
+        $kelas = [
+            "X", "XI", "XII"
+        ];
+    @endphp
     <div class="p-4 relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-        <flux:callout.heading>Absensi Kelas X</flux:callout.heading>
+        <flux:callout.heading>Absensi Kelas {{ $kelas[$key] }}</flux:callout.heading>
         <flux:chart wire:model="data.{{ $key }}" class="w-full h-full" >
             <flux:chart.svg>
                 <flux:chart.bar field="Jumlah" class="text-blue-500" radius="0" width="85%" />
