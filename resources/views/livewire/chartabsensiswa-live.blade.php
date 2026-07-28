@@ -1,6 +1,7 @@
 <div class="grid auto-rows-min gap-4 md:grid-cols-3">
     @foreach ($dataArray as $key => $item)
     @php
+        dd($dataArray);
         $kelas = [
             "X", "XI", "XII"
         ];
