@@ -1,11 +1,10 @@
 <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-    @foreach ($dataArray as $key => $item)
     @php
-        dd($dataArray);
-        $kelas = [
-            "X", "XI", "XII"
-        ];
+        $kelas = array_keys($dataArray);
+        $kelas = DB::table("kelas")->whereIn("idkelas", $kelas)->get()->pluck("namakelas", "idkelas")->toArray();
     @endphp
+    @foreach ($dataArray as $key => $item)
+    
     <div class="p-4 relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
         <flux:callout.heading>Absensi Kelas {{ $kelas[$key] }}</flux:callout.heading>
         <flux:chart wire:model="data.{{ $key }}" class="w-full h-full" >
