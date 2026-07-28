@@ -43,20 +43,17 @@
                 <flux:text>
                     Pastikan format Excel <strong>sesuai</strong> Template yang tersedia. Template dapat diunduh melalui tautan <strong>dibawah ini</strong>. Setelah mengisi data pada template, silakan unggah kembali file tersebut untuk memproses import data siswa.
                 </flux:text>
-                
-                <center>
-                    <table width="70%" style="border-collapse: collapse" border="1">
-                        <tr style="background: rgb(37, 37, 37)">
-                            <th>no</th>
-                            <th>nama</th>
-                            <th>nisn</th>
-                            <th>nis</th>
-                            <th>rombel</th>
-                            <th>jk</th>
-                            <th>alamat</th>
-                        </tr>
-                    </table>
-                </center>
+                <flux:table>
+                    <flux:table.columns>
+                        <flux:table.column width="5px">no</flux:table.column>
+                        <flux:table.column>nama</flux:table.column>
+                        <flux:table.column>nisn</flux:table.column>
+                        <flux:table.column>nis</flux:table.column>
+                        <flux:table.column>rombel</flux:table.column>
+                        <flux:table.column>jk</flux:table.column>
+                        <flux:table.column>alamat</flux:table.column>
+                    </flux:table.columns>
+                </flux:table>
                 {{-- <a href="">
                     <flux:badge variant="pill" color="orange" size="sm">Unduh Template</flux:badge>
                 </a> --}}
