@@ -78,7 +78,7 @@ class SiswaLive extends Component
         $this->data = [];
         
         $this->data['idsiswa'] = $idsiswa;
-        $this->data['foto'] = $foto;
+        $this->data['foto'] =  Storage::disk('s3')->temporaryUrl($foto, now()->addMinutes(15)); 
         Flux::modal('modal-gambar')->show();
         
     }
@@ -90,7 +90,7 @@ class SiswaLive extends Component
         siswaM::where("idsiswa", $this->data["idsiswa"])->update([
             "foto" => $this->data["foto"],
         ]);
-
+        $this->data['foto'] = Storage::disk('s3')->temporaryUrl($path, now()->addMinutes(15)); 
         $this->reset('gambar');
         // Flux::modals()->close();
     }
