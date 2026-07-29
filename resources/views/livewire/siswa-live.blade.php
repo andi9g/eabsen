@@ -10,6 +10,7 @@
 
             <center>
                 @if (!empty($data['foto']))
+                    {{ dd($data['foto']) }}
                     <img src="/disk-s3/{{ $data['foto'] }}" alt="Foto Profil">
                 @endif
             </center>
