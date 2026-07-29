@@ -93,14 +93,28 @@
             <flux:button variant="primary" color="blue" class="" wire:click="buttontambahsiswa">Tambah Data Siswa</flux:button>
             <flux:button href="{{ route('import', []) }}" variant="primary" color="gray" class="">Import</flux:button>
             <div class="mt-3 md:mt-0 md:ml-auto w-full md:w-auto">
-                <div class="grid grid-cols-1 gap-1">
+                <div class="grid grid-cols-1 gap-1 space-y-2">
                     {{-- bagian kiri dan bawah menggunakan colom --}}
-                    <flux:input icon="magnifying-glass" placeholder="Search orders" class="ml-auto" wire:model.live.debounce.500ms="search"/>
+                    <div class="grid grid-cols-2 gap-3">
+                         <flux:select wire:model.live.debounce.500ms="idkelas">
+                            <flux:select.option value="">Kelas</flux:select.option>
+                            @foreach ($kelas as $item)
+                                <flux:select.option :value="$item->idkelas">{{ $item->namakelas }}</flux:select.option>
+                            @endforeach
+                        </flux:select>
+                         <flux:select wire:model.live.debounce.500ms="idjurusan">
+                            <flux:select.option value="">Jurusan</flux:select.option>
+                            @foreach ($jurusan as $item)
+                                <flux:select.option :value="$item->idjurusan">{{ $item->inisialjurusan }}</flux:select.option>
+                            @endforeach
+                        </flux:select>
+                    </div>
+                    <flux:input icon="magnifying-glass" placeholder="Search orders" class="w-full" wire:model.live.debounce.500ms="search"/>
                 </div>
             </div>
         </div>
 
-        <flux:table :paginate="$siswa">
+        <flux:table :paginate="$siswa" class="mt-2">
         </flux:table>
 
         <flux:table>

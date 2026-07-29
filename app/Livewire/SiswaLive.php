@@ -35,6 +35,8 @@ class SiswaLive extends Component
     public $data, $kelas, $jurusan;
     public $search, $update;
 
+    public $idkelas, $idjurusan;
+
     #[Validate('image|max:2000', message: 'File harus berupa gambar maksimal 2MB')]
     public $gambar; 
 
@@ -45,6 +47,9 @@ class SiswaLive extends Component
         $this->kelas = kelasM::where("idinstansi", $this->idinstansi)->get();
         $this->jurusan = jurusanM::where("idinstansi", $this->idinstansi)->get();
         $this->gambar='';
+        $this->search = '';
+        $this->idkelas = '';
+        $this->idjurusan = '';
     }
 
     public function render()
@@ -55,6 +60,10 @@ class SiswaLive extends Component
                 ->orWhere("nisn", "like", "$this->search%")
                 ->orWhere("nis", "like", "$this->search%");
             });
+        })->when($this->idkelas, function($q) {
+            $q->where("idkelas", $this->idkelas);
+        })->when($this->idjurusan, function($q) {
+            $q->where("idjurusan", $this->idjurusan);
         })
         ->whereHas("kelas")
         ->whereHas("jurusan")

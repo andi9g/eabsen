@@ -49,7 +49,7 @@ class AbsensiswaLive extends Component
             "30" => "30 Data",
             "40" => "40 Data",
         ];
-        $this->tampil = 10;
+        $this->tampil = 40;
     }
 
     public function tanggalbaru($tanggal)
