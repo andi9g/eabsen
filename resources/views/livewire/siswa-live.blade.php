@@ -10,7 +10,6 @@
 
             <center>
                 @if (!empty($data['foto']))
-                    {{ dd($data['foto']) }}
                     <img src="/disk-s3/{{ $data['foto'] }}" alt="Foto Profil">
                 @endif
             </center>
@@ -116,9 +115,9 @@
                     <flux:table.cell>{{ $item->kelas->namakelas." ".$item->jurusan->inisialjurusan }}</flux:table.cell>
                     <flux:table.cell>
                         @if (empty($item->foto))
-                            <flux:badge as="button" variant="pill" icon="x-circle" color="red" wire:click="bukagambar({{ json_encode($item->pluck('foto', 'idsiswa')->toArray()) }})">Tambah Gambar</flux:badge>
+                            <flux:badge as="button" variant="pill" icon="x-circle" color="red" wire:click="bukagambar({{ $item->idsiswa }}, '{{ $item->foto??'profil.png' }}')">Tambah Gambar </flux:badge>
                         @else
-                            <flux:badge as="button" variant="pill" icon="check" color="green" wire:click="bukagambar({{ json_encode($item->pluck('foto', 'idsiswa')->toArray()) }})">Update Gambar</flux:badge>
+                            <flux:badge as="button" variant="pill" icon="check" color="green" wire:click="bukagambar({{ $item->idsiswa }}, '{{ $item->foto??'profil.png' }}')">Update Gambar </flux:badge>
                         @endif
                     </flux:table.cell>
                     <flux:table.cell>

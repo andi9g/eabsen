@@ -68,9 +68,9 @@ class SiswaLive extends Component
         ]);
     }
 
-    public function bukagambar(array $siswa)
+    public function bukagambar($idsiswa, $foto)
     {
-        $idsiswa = array_key_first($siswa);
+        
         if ($this->validasi($idsiswa)) {
             LivewireAlert::title('error')->error()->show();
             return;
@@ -78,7 +78,7 @@ class SiswaLive extends Component
         $this->data = [];
         
         $this->data['idsiswa'] = $idsiswa;
-        $this->data['foto'] = reset($siswa);
+        $this->data['foto'] = $foto;
         Flux::modal('modal-gambar')->show();
         
     }
