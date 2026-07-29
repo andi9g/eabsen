@@ -10,7 +10,7 @@
 
             <center>
                 @if (!empty($data['foto']))
-                    <img src="{{ Storage::disk('s3')->temporaryUrl($data['foto'], now()->addMinutes(10)) }}" alt="Foto Profil">
+                    <img src="/disk-s3/{{ $data['foto'] }}" alt="Foto Profil">
                 @endif
             </center>
             <flux:file-upload wire:model="gambar" label="Upload file">

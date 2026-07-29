@@ -1,19 +1,21 @@
 <div>
     <div class="w-full md:w-[80%] mx-auto space-y-3">
         <flux:card>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-                <flux:select wire:model.live="idkelas">
-                    <option value="">Semua Kelas</option>
-                    @foreach($this->kelas as $k)
-                        <option value="{{ $k->idkelas }}">{{ $k->namakelas }}</option>
-                    @endforeach
-                </flux:select>
-                <flux:select wire:model.live="idjurusan">
-                    <option value="">Semua Jurusan</option>
-                    @foreach($this->jurusan as $j)
-                        <option value="{{ $j->idjurusan }}">{{ $j->namajurusan }}</option>
-                    @endforeach
-                </flux:select>
+            <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-3">
+                <div class="grid grid-cols-2 gap-3">
+                    <flux:select wire:model.live="idkelas">
+                        <option value="">Semua Kelas</option>
+                        @foreach($this->kelas as $k)
+                            <option value="{{ $k->idkelas }}">{{ $k->namakelas }}</option>
+                        @endforeach
+                    </flux:select>
+                    <flux:select wire:model.live="idjurusan">
+                        <option value="">Semua Jurusan</option>
+                        @foreach($this->jurusan as $j)
+                            <option value="{{ $j->idjurusan }}">{{ $j->namajurusan }}</option>
+                        @endforeach
+                    </flux:select>
+                </div>
                 <flux:date-picker wire:model.live="tanggal" type="date" wire:change="pilihtanggal" />
                 <flux:input wire:model.live.debounce.500ms="search" placeholder="Pencarian..." />
             </div>
