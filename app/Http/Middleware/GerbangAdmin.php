@@ -16,7 +16,7 @@ class GerbangAdmin
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
-        if($user->akses->akses == 'admin' || $user->akses->akses == 'superadmin') {
+        if($user->akses->akses == 'admin' || $user->akses->akses == 'superadmin' || $user->akses->akses == 'tu') {
             if($user->is_default_password == 1) {
                 return redirect('settings/security')->with("warning", "Silahkan update password Anda terlebih dahulu untuk meningkatkan keamanan akun Anda.");
             }

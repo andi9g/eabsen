@@ -3,7 +3,7 @@
         $akses = auth()->user()->akses->akses;
         
     @endphp
-    @if ($akses == 'kepsek' || $akses == 'pegawai' || $akses == 'waka' || $akses == 'admin')
+    @if ($akses == 'kepsek' || $akses == 'pegawai' || $akses == 'waka' || $akses == 'admin'|| $akses == 'tu')
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         @livewire('chartabsensiswa-live')
         

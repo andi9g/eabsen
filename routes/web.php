@@ -100,10 +100,10 @@ use Illuminate\Support\Facades\Response;
         Route::middleware(['pegawai'])->group(function () {
             Route::get("absensiswa", [pegawaiC::class, 'absensiswa'])->name("absensiswa");
         });
-        Route::middleware(['wakadankepsek'])->group(function () {
+        // Route::middleware(['wakadankepsek'])->group(function () {
             Route::get("cetak/absensiswa", [pegawaiC::class, 'cetakabsensiswa'])->name("cetak.absensiswa");
             Route::get("cetak/absensiswa/cetak", [pegawaiC::class, 'cetaklaporanabsensiswa'])->name("laporanabsensiswa.cetak");
-        });    
+        // });    
         Route::middleware(['superadmin'])->group(function () {
             Route::get("cetak-kartu", [superadminC::class, 'cetakkartu'])->name("cetakkartu");
             Route::get("cetak-kartu/{idkelas}/{idjurusan}/{idinstansi}", [superadminC::class, 'cetakkartupdf'])->name("cetak.kartu");

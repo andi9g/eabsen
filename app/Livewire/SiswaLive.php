@@ -83,16 +83,54 @@ class SiswaLive extends Component
         
     }
 
+    public function hapusgambar()
+    {
+        if ($this->validasi($this->data['idsiswa'])) {
+            LivewireAlert::title('error')->error()->show();
+            return;
+        }
+
+        Flux::modals()->close();
+        LivewireAlert::title('Hapus Gambar?')
+            ->withConfirmButton('Delete')
+            ->question()
+            ->withCancelButton('Cancel')
+            ->onConfirm('deleteGambar')
+            ->show();
+
+    }
+
+    public function deleteGambar($data)
+    {
+        $siswa = siswaM::findOrFail($this->data['idsiswa']);
+        $siswa->update([
+            'foto' => ''
+        ]);
+        $this->data['foto'] = '';
+        Flux::toast(
+            heading: 'Success',
+            text: 'Gambar berhasil dihapus!',
+            variant: 'success'
+        );
+        Flux::modal('modal-gambar')->show();
+
+    }
+
     public function updategambar()
     {
+        $this->validate([
+            'gambar' => 'required|mime:png,jpg,jpeg',
+        ],[
+            "required" => "Field wajib di isi.",
+        ]);
+
         $path = $this->imageCompresh($this->gambar);
         $this->data["foto"] = $path;
         siswaM::where("idsiswa", $this->data["idsiswa"])->update([
             "foto" => $this->data["foto"],
         ]);
-
+        
         $this->reset('gambar');
-        // Flux::modals()->close();
     }
 
    
@@ -160,6 +198,9 @@ class SiswaLive extends Component
             "namasiswa" => $siswa->namasiswa,
             "alamat" => $siswa->alamat,
             "jk" => $siswa->jk,
+            "agama" => $siswa->agama,
+            "tempatlahir" => $siswa->tempatlahir,
+            "tanggallahir" => $siswa->tanggallahir,
             "hp" => $siswa->hp
         ];
         $this->resetValidation();
@@ -195,6 +236,9 @@ class SiswaLive extends Component
                 "jk" => $this->data["jk"],
                 "alamat" => $this->data["alamat"],
                 "hp" => $this->data["hp"],
+                "agama" => $this->data["agama"],
+                "tempatlahir" => $this->data["tempatlahir"],
+                "tanggallahir" => $this->data["tanggallahir"],
             ]);
             $text = "Data berhasil ditambahkan.";
         }else {
@@ -206,6 +250,9 @@ class SiswaLive extends Component
                 "jk" => $this->data["jk"],
                 "alamat" => $this->data["alamat"],
                 "hp" => $this->data["hp"],
+                "agama" => $this->data["agama"],
+                "tempatlahir" => $this->data["tempatlahir"],
+                "tanggallahir" => $this->data["tanggallahir"],
             ]);
             $text = "Data berhasil diperbaruhi.";
         }

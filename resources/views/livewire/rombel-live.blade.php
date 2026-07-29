@@ -62,7 +62,7 @@
                             <flux:table.cell>{{ $item->namakelas }}</flux:table.cell>
                             <flux:table.cell>
                                 <flux:badge as="button" variant="pill" icon="pencil-square" color="blue" wire:click="buttonupdatekelas({{ $item->idkelas }})">edit</flux:badge>
-                                <flux:badge as="button" variant="pill" icon="trash" color="red" wire:click="hapuskelas({{ $item->idkelas }})">edit</flux:badge>
+                                <flux:badge as="button" variant="pill" icon="trash" color="red" wire:click="hapuskelas({{ $item->idkelas }})">Hapus</flux:badge>
                             </flux:table.cell>
                         </flux:table.rows>
                     @endforeach

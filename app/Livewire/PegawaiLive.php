@@ -31,10 +31,11 @@ class PegawaiLive extends Component
     public function mount()
     {
         $this->dataPosisi = [
-            "pegawai",
-            "waka",
-            "kepsek",
-            "admin",
+            "pegawai" => "Pegawai",
+            "waka" => "Waka",
+            "kepsek" => "Kepala Sekolah",
+            "tu" => "Tata Usaha",
+            "admin" => "Admin",
         ];
         $this->iduser = auth()->user()->iduser;
         $this->idinstansi = session()->get("idinstansi");
@@ -56,6 +57,7 @@ class PegawaiLive extends Component
                 $q->where('akses', "pegawai")
                     ->orWhere("akses", "waka")
                     ->orWhere("akses", "kepsek")
+                    ->orWhere("akses", "tu")
                     ->orWhere("akses", "admin");
             });
         })->when($this->idinstansi, function($q) {
@@ -107,6 +109,7 @@ class PegawaiLive extends Component
                 $q->where('akses', "pegawai")
                     ->orWhere("akses", "waka")
                     ->orWhere("akses", "kepsek")
+                    ->orWhere("akses", "tu")
                     ->orWhere("akses", "admin");
             });
             

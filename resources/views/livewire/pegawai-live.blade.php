@@ -92,8 +92,8 @@
         
                 <div class="mt-3 md:mt-0 md:ml-auto w-full md:w-auto space-y-3">
                     <flux:select wire:model.live="data.{{ $item->iduser }}">
-                        @foreach ($dataPosisi as $dp)
-                            <flux:select.option :value="$dp" class="capitalize">{{ $dp }}</flux:select.option>
+                        @foreach ($dataPosisi as $key => $dp)
+                            <flux:select.option :value="$key" class="capitalize">{{ $dp }}</flux:select.option>
                         @endforeach
                     </flux:select>
                     <div class="grid grid-cols-2 gap-2">

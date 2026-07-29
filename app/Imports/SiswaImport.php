@@ -5,11 +5,13 @@ namespace App\Imports;
 use App\Models\siswaM;
 use App\Models\jurusanM;
 use App\Models\kelasM;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Illuminate\Database\QueryException;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class SiswaImport implements ToModel, WithHeadingRow
+class SiswaImport implements ToCollection, WithHeadingRow, WithChunkReading
 {
     protected $parameter;
 
@@ -18,62 +20,89 @@ class SiswaImport implements ToModel, WithHeadingRow
         $this->parameter = $parameter;
     }
 
-    public function model(array $row)
+    
+
+    public function collection(Collection $rows)
     {
 
-        
-        $rombel = $row["rombel"];
-        $ex = explode(" ", $rombel, 2);
-        
-        $kelas = kelasM::firstOrCreate([
-            "namakelas" => $ex[0],
-            "idinstansi" => session()->get("idinstansi")
-        ]);
-        $jurusan = jurusanM::firstOrCreate([
-            "namajurusan" => $ex[1],
-            "inisialjurusan" => $ex[1],
-            "idinstansi" => session()->get("idinstansi")
-        ]);
+        $idInstansi = session()->get("idinstansi");
+        $dataUpsert = [];
 
-        try {
-            if($this->parameter) { //true update dan tambah
-                $siswa = siswaM::updateOrCreate([
-                    "idinstansi" => session()->get("idinstansi"),
-                    "nisn" => $row["nisn"]
-                ],[
-                    "nis" => $row["nis"]??'',
-                    "namasiswa" => $row["nama"]??'',
-                    "jk" => $row["jk"]??'',
-                    "alamat" => $row["alamat"]??'',
-                    "hp" => $row["hp"]??'',
-                    "idkelas" => $kelas->idkelas??'',
-                    "idjurusan" => $jurusan->idjurusan??'',
+        // 1. Ambil semua kelas dan jurusan yang sudah ada di instansi ini (Eager Loading ke Memory)
+        $existingKelas = kelasM::where('idinstansi', $idInstansi)->pluck('idkelas', 'namakelas')->toArray();
+        $existingJurusan = jurusanM::where('idinstansi', $idInstansi)->pluck('idjurusan', 'namajurusan')->toArray();
+
+        foreach ($rows as $row) {
+           $rombel = $row["rombel"];
+            if (empty($rombel)) continue; // Pengaman jika kolom rombel kosong
+
+            $ex = explode(" ", $rombel, 2);
+            $namaKelas = $ex[0] ?? '';
+            $namaJurusan = $ex[1] ?? '';
+            
+            // 2. Cek/Buat Kelas dari Memory (Bukan dari query database berulang)
+            if (!isset($existingKelas[$namaKelas])) {
+                $newKelas = kelasM::create([
+                    "namakelas" => $namaKelas,
+                    "idinstansi" => $idInstansi
                 ]);
-            }else { //false cukup nambah data
-                $siswa = siswaM::firstOrCreate([
-                    "idinstansi" => session()->get("idinstansi"),
-                    "nisn" => $row["nisn"]
-                ],[
-                    "nis" => $row["nis"]??'',
-                    "namasiswa" => $row["nama"]??'',
-                    "jk" => $row["jk"]??'',
-                    "alamat" => $row["alamat"]??'',
-                    "hp" => $row["hp"]??'',
-                    "idkelas" => $kelas->idkelas??'',
-                    "idjurusan" => $jurusan->idjurusan??'',
-                ]);
+                // Masukkan ke cache memory agar baris berikutnya tidak buat kueri lagi
+                $existingKelas[$namaKelas] = $newKelas->idkelas;
             }
-        } catch (QueryException $e) {
+            $idKelas = $existingKelas[$namaKelas];
 
-            return back()->with('error', $e->getMessage());
-
-        } catch (\Throwable $e) {
-
-            return back()->with('error', $e->getMessage());
-
+            // 3. Cek/Buat Jurusan dari Memory
+            if (!isset($existingJurusan[$namaJurusan])) {
+                $newJurusan = jurusanM::create([
+                    "namajurusan" => $namaJurusan,
+                    "inisialjurusan" => $namaJurusan,
+                    "idinstansi" => $idInstansi
+                ]);
+                // Masukkan ke cache memory
+                $existingJurusan[$namaJurusan] = $newJurusan->idjurusan;
+            }
+            $idJurusan = $existingJurusan[$namaJurusan];
+            // dd($row["tanggallahir"]);
+            // 4. Tampung data siswa untuk dikirim ke upsert massal
+            $dataUpsert[] = [
+                "idinstansi" => $idInstansi,
+                "nisn"       => $row["nisn"],
+                "nis"        => $row["nis"] ?? '',
+                "namasiswa"  => $row["nama"] ?? '',
+                "jk"         => $row["jk"] ?? '',
+                "alamat"     => $row["alamat"] ?? '',
+                "hp"         => $row["hp"] ?? '',
+                "tempatlahir" => $row["tempatlahir"] ?? '',
+                "tanggallahir" => $row["tanggallahir"] ?? '',
+                "agama" => $row["agama"] ?? '',
+                "idkelas"    => $idKelas,
+                "idjurusan"  => $idJurusan,
+                "created_at" => now(), // Sangat disarankan jika pakai upsert manual
+                "updated_at" => now(),
+            ];
         }
         
 
-        return;
+        
+            if($this->parameter) { //true update dan tambah
+                $siswa = siswaM::upsert(
+                    $dataUpsert,
+                    ['idinstansi', 'nisn'],
+                    ['nis', 'namasiswa', 'jk', 'alamat', 'hp', 'tempatlahir', 'tanggallahir', 'agama', 'idkelas', 'idjurusan', 'created_at', 'updated_at']
+                );
+            }else { //false cukup nambah data
+                $siswa = siswaM::upsert(
+                    $dataUpsert,
+                    ['idinstansi', 'nisn'],
+                    []
+                );
+            }
+       
+    
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000; 
     }
 }

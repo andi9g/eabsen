@@ -11,6 +11,10 @@
             <center>
                 @if (!empty($data['foto']))
                     <img src="/disk-s3/{{ $data['foto'] }}" alt="Foto Profil">
+
+                    <div class="flex mt-2">
+                        <flux:badge as="button" class="mx-auto" color="red" wire:click="hapusgambar">Hapus Gambar</flux:badge>
+                    </div>
                 @endif
             </center>
             <flux:file-upload wire:model="gambar" label="Upload file">
@@ -21,7 +25,6 @@
                 @if ($gambar)
                     <flux:file-item
                         :heading="$gambar->getClientOriginalName()"
-                        :image="$gambar->temporaryUrl()"
                         :size="$gambar->getSize()"
                     >
                         <x-slot name="actions">
@@ -49,6 +52,11 @@
             <flux:input wire:model="data.nisn" placeholder="masukan nisn" label="NISN" :disabled="$update"/>
             <flux:input wire:model="data.nis" placeholder="masukan nis" label="NIS"/>
             <flux:input wire:model="data.namasiswa" placeholder="masukan nama siswa" label="Nama Siswa"/>
+            <flux:input wire:model="data.agama" placeholder="masukan agama" label="Agama"/>
+            <flux:input wire:model="data.tempatlahir" placeholder="masukan tempat lahir" label="Tempat Lahir"/>
+            <flux:input wire:model="data.tanggallahir" placeholder="masukan tanggal lahir" label="Tanggal Lahir" type="date"/>
+
+
             <flux:select label="Kelas" wire:model="data.idkelas">
                 <flux:select.option value="">Pilih Kelas</flux:select.option>
                 @foreach ($kelas as $item)
@@ -122,7 +130,7 @@
                     </flux:table.cell>
                     <flux:table.cell>
                         <flux:badge as="button" variant="pill" icon="pencil-square" color="blue" wire:click="buttonupdatesiswa({{ $item->idsiswa }})">edit</flux:badge>
-                        <flux:badge as="button" variant="pill" icon="trash" color="red" wire:click="buttonhapus({{ $item->idsiswa }})">edit</flux:badge>
+                        <flux:badge as="button" variant="pill" icon="trash" color="red" wire:click="buttonhapus({{ $item->idsiswa }})">Hapus</flux:badge>
                     </flux:table.cell>
                 </flux:table.rows>
             @endforeach

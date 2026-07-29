@@ -16,7 +16,7 @@ class GerbangWaka
     public function handle(Request $request, Closure $next): Response
     {
         $user = auth()->user()->akses->akses ?? "user";
-        if($user == "kepsek" || $user == "waka" || $user == "admin") {
+        if($user == "kepsek" || $user == "waka" || $user == "admin" || $user == "pegawai"|| $user == "tu") {
             return $next($request);
         }else {
             return redirect('dashboard')->with("error", "Terjadi kesalahan");

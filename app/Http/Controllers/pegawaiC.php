@@ -34,7 +34,7 @@ class pegawaiC extends Controller
                 "idinstansi" => session("idinstansi"),
                 "idsemester" => session("semester"),
             ])->doesntExist();
-        }elseif($akses == "admin" || $akses == "kepsek") {
+        }elseif($akses == "admin" || $akses == "kepsek" || $akses == "tu") {
             $error = false;
         }
 

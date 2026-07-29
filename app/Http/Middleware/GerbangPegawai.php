@@ -17,7 +17,7 @@ class GerbangPegawai
     {
         $akses = auth()->user()->akses->akses;
         // dd($akses);
-        if($akses == "admin" || $akses == "pegawai" || $akses == "kepsek"){
+        if($akses == "admin" || $akses == "pegawai" || $akses == "kepsek" || $akses == "waka" || $akses == "tu"){
             return $next($request);
         }else {
             return redirect()->route("dashboard")->with("error", "Anda tidak memiliki akses ke halaman ini.");

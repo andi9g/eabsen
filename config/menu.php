@@ -6,13 +6,13 @@ return [
         'label' => 'Home',
         'route' => 'dashboard',
         'icon' => 'home',
-        'roles' => ['admin', 'kepsek', 'pegawai', 'user', 'superadmin', 'waka'],
+        'roles' => ['admin', 'kepsek', 'pegawai', 'user', 'superadmin', 'waka', 'tu'],
     ],
     [
         'label' => 'Absen Siswa',
         'route' => 'absensiswa',
         'icon' => 'arrow-down-on-square',
-        'roles' => ['admin', 'kepsek', 'pegawai', 'waka'],
+        'roles' => ['admin', 'kepsek', 'pegawai', 'waka', 'tu'],
     ],
     [
         'label' => 'Registerasi Kartu',
@@ -26,7 +26,7 @@ return [
     [
         'label' => 'Account',
         'icon' => 'user-circle',
-        'roles' => ['admin', 'superadmin'],
+        'roles' => ['admin', 'superadmin', 'tu'],
         'children' => [
             [
                 'label' => 'Admin',
@@ -36,17 +36,17 @@ return [
             [
                 'label' => 'Pegawai',
                 'route' => 'pegawai',
-                'roles' => ['admin'],
+                'roles' => ['admin', 'tu'],
             ],
             [
                 'label' => 'User',
                 'route' => 'user',
-                'roles' => ['admin'],
+                'roles' => ['admin', 'tu'],
             ],
             [
                 'label' => 'Wali Kelas',
                 'route' => 'walikelas',
-                'roles' => ['admin'],
+                'roles' => ['admin', 'tu'],
             ],
 
            
@@ -55,23 +55,23 @@ return [
     [
         'label' => 'Data Siswa',
         'icon' => 'users',
-        'roles' => ['admin'],
+        'roles' => ['admin', 'tu'],
         'children' => [
             [
                 'label' => 'Import',
                 'route' => 'import',
                 'icon' => 'arrow-up-on-square-stack',
-                'roles' => ['admin'],
+                'roles' => ['admin', 'tu'],
             ],
             [
                 'label' => 'Siswa',
                 'route' => 'siswa',
-                'roles' => ['admin'],
+                'roles' => ['admin', 'tu'],
             ],
             [
                 'label' => 'Rombel',
                 'route' => 'rombel',
-                'roles' => ['admin'],
+                'roles' => ['admin', 'tu'],
             ],
 
            
@@ -80,7 +80,7 @@ return [
     [
         'label' => 'Pengaturan',
         'icon' => 'wrench-screwdriver',
-        'roles' => ['admin', 'superadmin'],
+        'roles' => ['admin', 'superadmin', 'tu'],
         'children' => [
             [
                 'label' => 'Perangkat',
@@ -91,22 +91,22 @@ return [
             [
                 'label' => 'Jam Operasional',
                 'route' => 'jamoperasional',
-                'roles' => ['admin'],
+                'roles' => ['admin', 'tu'],
             ],
             [
                 'label' => 'Instansi',
                 'route' => 'instansi',
-                'roles' => ['admin'],
+                'roles' => ['admin', 'tu'],
             ],
             [
                 'label' => 'Semester',
                 'route' => 'semester',
-                'roles' => ['admin'],
+                'roles' => ['admin', 'tu'],
             ],
             [
                 'label' => 'Desain Kartu',
                 'route' => 'desainkartu',
-                'roles' => ['admin','superadmin'],
+                'roles' => ['admin','superadmin', 'tu'],
             ],
         ],
     ],
@@ -120,12 +120,12 @@ return [
     [
         'label' => 'Cetak Laporan',
         'icon' => 'clipboard-document',
-        'roles' => ['kepsek', 'admin','waka'],
+        'roles' => ['kepsek', 'admin','waka', 'tu'],
         'children' => [
             [
                 'label' => 'Absen Siswa',
                 'route' => 'cetak.absensiswa',
-                'roles' => ['kepsek', 'admin','waka'],
+                'roles' => ['kepsek', 'admin','waka', 'tu'],
             ],
            
         ],
@@ -135,7 +135,7 @@ return [
         'label' => 'Download Aplikasi',
         'route' => 'pwa.download',
         'icon' => 'device-phone-mobile',
-        'roles' => ['admin', 'pegawai', 'user', 'waka', 'kepsek'],
+        'roles' => ['admin', 'pegawai', 'waka', 'kepsek', 'tu'],
     ],
 
 ];
