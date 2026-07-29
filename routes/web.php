@@ -18,21 +18,40 @@ use Illuminate\Support\Facades\Response;
     }
 
     
+    // Route::get('/disk-s3/{nama_file}', function ($namaFile) {
+    //     $fullPath = $namaFile; // Sesuaikan jika ada sub-folder statis seperti 'absen/' . $namaFile
+    
+    //     if (Storage::disk('s3')->exists($fullPath)) {
+    //         $file = Storage::disk('s3')->get($fullPath);
+    //         $type = Storage::disk('s3')->mimeType($fullPath);
+    
+    //         return Response::make($file, 200, [
+    //             'Content-Type' => $type,
+    //             'Cache-Control' => 'public, max-age=86400',
+    //         ]);
+    //     }
+    
+    //     abort(404);
+    // })->where('nama_file', '.*');
     Route::get('/disk-s3/{nama_file}', function ($namaFile) {
-        $fullPath = $namaFile; // Sesuaikan jika ada sub-folder statis seperti 'absen/' . $namaFile
-    
+        // Menghapus karakter slash di awal jika ada, agar path S3 valid
+        $fullPath = ltrim($namaFile, '/'); 
+
         if (Storage::disk('s3')->exists($fullPath)) {
-            $file = Storage::disk('s3')->get($fullPath);
+            // OPTIMAL: Menggunakan stream agar tidak membebani RAM server PHP
+            $stream = Storage::disk('s3')->readStream($fullPath);
             $type = Storage::disk('s3')->mimeType($fullPath);
-    
-            return Response::make($file, 200, [
+
+            return Response::stream(function () use ($stream) {
+                fpassthru($stream);
+            }, 200, [
                 'Content-Type' => $type,
-                'Cache-Control' => 'public, max-age=86400',
+                'Cache-Control' => 'public, max-age=86400', // Cache browser 24 jam
             ]);
         }
-    
+
         abort(404);
-    })->where('nama_file', '.*');
+    })->where('nama_file', '.*')->name('disk.s3');
 
    
     
