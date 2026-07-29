@@ -128,7 +128,7 @@ class SiswaLive extends Component
     public function updategambar()
     {
         $this->validate([
-            'gambar' => 'required|mime:png,jpg,jpeg',
+            'gambar' => 'required|mimes:png,jpg,jpeg',
         ],[
             "required" => "Field wajib di isi.",
         ]);

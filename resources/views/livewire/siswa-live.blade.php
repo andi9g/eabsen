@@ -109,7 +109,7 @@
                             @endforeach
                         </flux:select>
                     </div>
-                    <flux:input icon="magnifying-glass" placeholder="Search orders" class="w-full" wire:model.live.debounce.500ms="search"/>
+                    <flux:input icon="magnifying-glass" placeholder="Cari siswa" class="w-full" wire:model.live.debounce.500ms="search"/>
                 </div>
             </div>
         </div>
