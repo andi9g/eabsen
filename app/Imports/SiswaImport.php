@@ -64,6 +64,7 @@ class SiswaImport implements ToCollection, WithHeadingRow, WithChunkReading
             $idJurusan = $existingJurusan[$namaJurusan];
             // dd($row["tanggallahir"]);
             // 4. Tampung data siswa untuk dikirim ke upsert massal
+            // dd($idInstansi);
             $dataUpsert[] = [
                 "idinstansi" => $idInstansi,
                 "nisn"       => $row["nisn"],
@@ -81,6 +82,7 @@ class SiswaImport implements ToCollection, WithHeadingRow, WithChunkReading
                 "updated_at" => now(),
             ];
         }
+
         
 
         
@@ -88,13 +90,13 @@ class SiswaImport implements ToCollection, WithHeadingRow, WithChunkReading
                 $siswa = siswaM::upsert(
                     $dataUpsert,
                     ['idinstansi', 'nisn'],
-                    ['nis', 'namasiswa', 'jk', 'alamat', 'hp', 'tempatlahir', 'tanggallahir', 'agama', 'idkelas', 'idjurusan', 'created_at', 'updated_at']
+                    ['nis', 'idinstasi', 'namasiswa', 'jk', 'alamat', 'hp', 'tempatlahir', 'tanggallahir', 'agama', 'idkelas', 'idjurusan', 'created_at', 'updated_at']
                 );
             }else { //false cukup nambah data
                 $siswa = siswaM::upsert(
                     $dataUpsert,
                     ['idinstansi', 'nisn'],
-                    []
+                    ['idinstansi']
                 );
             }
        

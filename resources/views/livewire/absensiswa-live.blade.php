@@ -63,27 +63,66 @@
                 };
             @endphp
                 <flux:kanban.card wire:key="data-{{ $item->idsiswa }}">
-                    <div class="flex items-center">
-                        <div class="flex-col">
+                    <div class="flex flex-col md:flex-row md:items-center">
+                        <div class="grid grid-cols-1 gap-1">
                             <flux:heading>{{ $item->namasiswa }}
-                                @if ($status == "h" && $terlambat)
-                                <flux:badge size="sm" variant="pill" color="red" icon="clock">
-                                    Terlambat
-                                </flux:badge>
-                            @endif
+                                    @if ($status == "h" && $terlambat)
+                                    <flux:badge size="sm" variant="pill" color="red" icon="clock">
+                                        Terlambat
+                                    </flux:badge>
+                                @endif
                             </flux:heading>
-                            
+                            <flux:text>{{ $item->nisn }}</flux:text>
                         </div>
-                        <div class="ml-auto flex-row space-y-2">
-                            <flux:select size="sm" wire:change="changeState({{ $item->idsiswa }}, $event.target.value)"  style="background-color: {{ $bg }}; color: {{ $text }}; font-weight: bold;">
-                                
-                                
+                    
+                        <div class="mt-3 md:mt-0 md:ml-auto w-full md:w-auto">
+                            <div class="grid grid-cols-1 gap-1">
+                                <div 
+                                    class="mt-3 md:mt-0 md:ml-auto w-full md:w-auto" 
+                                    x-data="{ status: '{{ $status }}' }"
                                 >
-                                <flux:select.option value="a" :selected="$status=='a'">Alpha</flux:select.option>
-                                <flux:select.option value="h" :selected="$status=='h'">Hadir</flux:select.option>
-                                <flux:select.option value="i" :selected="$status=='i'">Izin</flux:select.option>
-                                <flux:select.option value="s" :selected="$status=='s'">Sakit</flux:select.option>
-                            </flux:select>
+                                    <div class="grid grid-cols-1 gap-1">
+                                        
+                                        <!-- Radio Group Segmented Flux UI -->
+                                        <flux:radio.group 
+                                            variant="segmented" 
+                                            x-model="status"
+                                            wire:change="changeState({{ $item->idsiswa }}, event.target.value)"
+                                            class="!rounded-full p-1 border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800"
+                                        >
+                                            <!-- Opsi Izin ('i') -->
+                                            <flux:radio 
+                                                value="i" 
+                                                label="Izin" 
+                                                class="!rounded-full px-4 py-1.5 transition-all font-medium text-xs text-center justify-center cursor-pointer data-[checked]:!bg-sky-500 data-[checked]:!text-white" 
+                                            />
+                                
+                                            <!-- Opsi Sakit ('s') -->
+                                            <flux:radio 
+                                                value="s" 
+                                                label="Sakit" 
+                                                class="!rounded-full px-4 py-1.5 transition-all font-medium text-xs text-center justify-center cursor-pointer data-[checked]:!bg-yellow-500 data-[checked]:!text-white" 
+                                            />
+                                
+                                            <!-- Opsi Alfa ('a') -->
+                                            <flux:radio 
+                                                value="a" 
+                                                label="Alfa" 
+                                                class="!rounded-full px-4 py-1.5 transition-all font-medium text-xs text-center justify-center cursor-pointer data-[checked]:!bg-rose-500 data-[checked]:!text-white" 
+                                            />
+                                
+                                            <!-- Opsi Hadir ('h') -->
+                                            <flux:radio 
+                                                value="h" 
+                                                label="Hadir" 
+                                                class="!rounded-full px-4 py-1.5 transition-all font-medium text-xs text-center justify-center cursor-pointer data-[checked]:!bg-emerald-500 data-[checked]:!text-white" 
+                                            />
+                                        </flux:radio.group>
+                                
+                                    </div>
+                                </div>
+                                
+                            </div>
                         </div>
                     </div>
                 </flux:kanban.card>
