@@ -45,6 +45,53 @@ class pegawaiC extends Controller
             "judul" => "Laporan Absen Siswa"
         ]);
     }
+    public function laporansiswa(Request $request)
+    {
+        $akses = auth()->user()->akses->akses ?? "user";
+        $error = true;
+        if($akses == "pegawai") {
+            $error = walikelasM::where([
+                "idinstansi" => session("idinstansi"),
+                "idsemester" => session("semester"),
+            ])->doesntExist();
+        }elseif($akses == "admin" || $akses == "kepsek" || $akses == "tu") {
+            $error = false;
+        }
+
+        if($error) {
+            return redirect('dashboard')->with("error", "Maaf anda tidak memiliki akses!.");
+        }
+        return view("pages.laporansiswa", [
+            "judul" => "Laporan Data Siswa"
+        ]);
+    }
+
+    public function cetaklaporansiswa(Request $request)
+    {
+        $idkelas = $request->kelas;
+        $idjurusan = $request->jurusan;
+        $siswa = siswaM::with(['kelas', 'jurusan'])
+        ->when($request->kelas, function ($q) use ($idkelas) {
+            $q->where('idkelas', $idkelas);
+        })
+        ->when($request->jurusan, function ($q) use ($idjurusan) {
+            $q->where('idjurusan', $idjurusan);
+        })
+        ->where('idinstansi', session('idinstansi'))
+        ->get();
+
+         $pdf = Pdf::loadView("pages.laporan.cetaksiswa", [
+            "judul" => "Data Siswa",
+            "siswa" => $siswa,
+            "idinstansi" => session('idinstansi'),
+        ])
+        ->setPaper('a4', 'portrait')
+        ->setOption([
+            'isRemoteEnabled' => true,
+        ]);
+        
+        return $pdf->stream("Laporan Data Siswa_".strtotime(now()).".pdf");
+    }
     public function cetaklaporanabsensiswa(Request $request)
     {
         $request->validate([

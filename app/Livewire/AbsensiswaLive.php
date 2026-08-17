@@ -29,6 +29,8 @@ class AbsensiswaLive extends Component
     public $datatampil, $tampil;
     public $search, $idkelas, $idjurusan, $tanggal;
 
+    public $pilihan;
+
     public function mount()
     {
         $this->idinstansi = session("idinstansi")??"";
@@ -68,10 +70,8 @@ class AbsensiswaLive extends Component
 
     public function render()
     {
-        
-        $siswa = siswaM::where("idinstansi", $this->idinstansi)
-            ->whereHas("kelas")
-            ->whereHas("jurusan")
+        $siswa = siswaM::with(['kelas', 'jurusan'])
+            ->where("idinstansi", $this->idinstansi)
             ->when($this->idkelas, function ($query) {
                 $query->where("idkelas", $this->idkelas);
             })
@@ -87,7 +87,7 @@ class AbsensiswaLive extends Component
             ->orderBy("namasiswa", "asc")
             ->paginate($this->tampil);
 
-            $this->validasi($siswa->first()->idsiswa);
+            // $this->validasi($siswa->first()->idsiswa);
         return view('livewire.absensiswa-live', [
             'siswa' => $siswa,
         ]);
@@ -115,6 +115,8 @@ class AbsensiswaLive extends Component
             ['waktumasuk', 'status']
         );
         
+        $this->dataUpdate = [];
+        $this->pilihan = "";
         LivewireAlert::title('Success')->success()->show();
     }
 
@@ -122,6 +124,7 @@ class AbsensiswaLive extends Component
     {
         $this->data[$idsiswa] = $value;
         $this->dataUpdate[$idsiswa] = $value;
+        // dd($this->dataUpdate);
     }
 
     protected function validasi($idsiswa):bool
@@ -131,5 +134,25 @@ class AbsensiswaLive extends Component
             "idsiswa" => $idsiswa,
         ])->exists();
         return $siswa;
+    }
+
+    public function kehadiran()
+    {
+        if(empty($this->pilihan)) {
+            $this->dataUpdate = [];
+            return;
+        }
+        $ids = siswaM::where([
+            "idinstansi" => $this->idinstansi,
+            "idkelas" => $this->idkelas,
+            "idjurusan" => $this->idjurusan,
+        ])->select('idsiswa')
+        ->pluck('idsiswa')->toArray();
+
+        $data = array_fill_keys($ids, $this->pilihan);
+        
+        $this->dataUpdate = $data;
+        $this->data = $data;
+        // dd($this->dataUpdate);
     }
 }

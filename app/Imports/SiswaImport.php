@@ -90,7 +90,7 @@ class SiswaImport implements ToCollection, WithHeadingRow, WithChunkReading
                 $siswa = siswaM::upsert(
                     $dataUpsert,
                     ['idinstansi', 'nisn'],
-                    ['nis', 'idinstasi', 'namasiswa', 'jk', 'alamat', 'hp', 'tempatlahir', 'tanggallahir', 'agama', 'idkelas', 'idjurusan', 'created_at', 'updated_at']
+                    ['nis', 'idinstansi', 'namasiswa', 'jk', 'alamat', 'hp', 'tempatlahir', 'tanggallahir', 'agama', 'idkelas', 'idjurusan', 'created_at', 'updated_at']
                 );
             }else { //false cukup nambah data
                 $siswa = siswaM::upsert(

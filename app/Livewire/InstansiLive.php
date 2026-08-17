@@ -14,6 +14,7 @@ use Livewire\WithPagination;
 use App\Models\instansiM;
 use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Format;
 
 class InstansiLive extends Component
 {
@@ -100,33 +101,48 @@ class InstansiLive extends Component
     
     protected function imageCompresh(String $folder, $file): string
     {
-        $quality = 70;
+        
+        $quality = 75;
 
         $filename = uniqid() . '.' . $file->getClientOriginalExtension();
         $path = "$folder/$filename";
         $path192 = "pwa/192/$folder/$filename";
         $path512 = "pwa/512/$folder/$filename";
 
-        $image = Image::decode($file)
-        ->scale(height:512);
+        $image = Image::decode($file);
 
-        $imagepwa192 = Image::decode($file)
-        ->contain(192, 192);
-        $imagepwa512 = Image::decode($file)
-        ->contain(512, 512);
+        $image512 = $image->scale(height:512);
+        $pwa192 = $image->contain(192, 192, 'rgba(0, 0, 0, 0)');
+        $pwa512 = $image->contain(512, 512, 'rgba(0, 0, 0, 0)');
 
-        Storage::disk("s3")->put(
+        $storage = Storage::disk('s3');
+
+        $storage->put(
             $path,
-            $image->encodeUsingFileExtension($file->getClientOriginalExtension(), quality: $quality)
+            $image512->encodeUsingFormat(Format::WEBP, progressive: true, quality: $quality)
         );
-        Storage::disk("s3")->put(
+        $storage->put(
             $path192,
-            $imagepwa192->encodeUsingFileExtension($file->getClientOriginalExtension(), quality: $quality)
+            $pwa192->encodeUsingFormat(Format::WEBP, progressive: true, quality: $quality)
         );
-        Storage::disk("s3")->put(
+        $storage->put(
             $path512,
-            $imagepwa512->encodeUsingFileExtension($file->getClientOriginalExtension(), quality: $quality)
+            $pwa512->encodeUsingFormat(Format::WEBP, progressive: true, quality: $quality)
         );
+
+
+        // Storage::disk("s3")->put(
+        //     $path,
+        //     $image->encodeUsingFileExtension($file->getClientOriginalExtension(), quality: $quality)
+        // );
+        // Storage::disk("s3")->put(
+        //     $path192,
+        //     $imagepwa192->encodeUsingFileExtension($file->getClientOriginalExtension(), quality: $quality)
+        // );
+        // Storage::disk("s3")->put(
+        //     $path512,
+        //     $imagepwa512->encodeUsingFileExtension($file->getClientOriginalExtension(), quality: $quality)
+        // );
 
         return $path;
     }

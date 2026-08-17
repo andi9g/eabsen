@@ -102,7 +102,11 @@ use Illuminate\Support\Facades\Response;
         });
         // Route::middleware(['wakadankepsek'])->group(function () {
             Route::get("cetak/absensiswa", [pegawaiC::class, 'cetakabsensiswa'])->name("cetak.absensiswa");
+            Route::get("cetak/laporansiswa", [pegawaiC::class, 'laporansiswa'])->name("cetak.laporansiswa");
+            Route::get("cetak/laporanpegawai", [pegawaiC::class, 'cetaklaporanpegawai'])->name("cetak.laporanpegawai");
             Route::get("cetak/absensiswa/cetak", [pegawaiC::class, 'cetaklaporanabsensiswa'])->name("laporanabsensiswa.cetak");
+            Route::get("cetak/laporansiswa/cetak", [pegawaiC::class, 'cetaklaporansiswa'])->name("laporansiswa.cetak");
+            Route::get("cetak/laporanpegawai/cetak", [pegawaiC::class, 'cetaklaporanpegawai'])->name("laporanpegawai.cetak");
         // });    
         Route::middleware(['superadmin'])->group(function () {
             Route::get("cetak-kartu", [superadminC::class, 'cetakkartu'])->name("cetakkartu");

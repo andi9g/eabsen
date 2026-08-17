@@ -127,6 +127,16 @@ return [
                 'route' => 'cetak.absensiswa',
                 'roles' => ['kepsek', 'admin','waka', 'tu'],
             ],
+            [
+                'label' => 'Data Siswa',
+                'route' => 'cetak.laporansiswa',
+                'roles' => ['kepsek', 'admin','waka', 'tu'],
+            ],
+            [
+                'label' => 'Data Pegawai',
+                'route' => 'cetak.laporanpegawai',
+                'roles' => ['kepsek', 'admin','waka', 'tu'],
+            ],
            
         ],
     ],

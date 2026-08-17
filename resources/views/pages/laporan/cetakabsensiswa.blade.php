@@ -38,6 +38,7 @@
         .tabelku th, .tabelku td {
             border: 1px solid #000;
             padding: 8px;
+            font-size: 9pt;
         }
         .tabelku th {
             text-align: center;
@@ -54,14 +55,14 @@
 </head>
 <body>
     <table width="100%">
-        <tr valign="top">
+        <tr >
             <td width="75px">
                 <img src="{{ Storage::disk('s3')->temporaryUrl(auth()->user()->detailuser->instansi->logo, now()->addMinutes(10)) }}" width="75px" alt="Gambar Produk">
             </td>
             <td align="left" class="paddingku">
                 <h1>{{ auth()->user()->detailuser->instansi->namainstansi }}</h1>
-                <h2>{{ auth()->user()->detailuser->instansi->namainstansi }}</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas sapiente aperiam, debitis ducimus maiores beatae voluptatibus quisquam, fugit a ipsam officiis hic quis voluptatem repellendus ex aspernatur nesciunt repudiandae? Adipisci?</p>
+                <h2>{{ auth()->user()->detailuser->instansi->npsn }}</h2>
+                <p>{{ auth()->user()->detailuser->instansi->alamat }}</p>
             </td>
         </tr>
     </table>
