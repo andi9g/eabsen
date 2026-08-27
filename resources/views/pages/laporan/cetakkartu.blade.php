@@ -114,6 +114,10 @@
                                                             @php
                                                                 $pill = $data["instansi"];
                                                             @endphp
+                                                        @elseif($item == "jurusan")
+                                                            @php
+                                                                $pill = $data["jurusan"];
+                                                            @endphp
                                                         @elseif($item == "alamat")
                                                             @php
                                                                 $pill = ucwords(strtolower($data["alamat"]));
