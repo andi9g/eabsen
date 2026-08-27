@@ -47,12 +47,13 @@
                             
                              
                              <flux:pillbox variant="combobox" multiple max="4" placeholder="Choose skills..." wire:model.live="pillbox" label="Informasi Umum">
+                                 <flux:pillbox.option value="nisn" wire:key="nisn">NISN</flux:pillbox.option>
+                                 <flux:pillbox.option value="ttl" wire:key="ttl">TTL</flux:pillbox.option>
+                                 <flux:pillbox.option value="alamat" wire:key="alamat">alamat</flux:pillbox.option>
                                 <flux:pillbox.option value="jurusan" wire:key="jurusan">jurusan</flux:pillbox.option>
                                 <flux:pillbox.option value="instansi" wire:key="instansi">instansi</flux:pillbox.option>
-                                <flux:pillbox.option value="alamat" wire:key="alamat">alamat</flux:pillbox.option>
                                 <flux:pillbox.option value="kelamin" wire:key="kelamin">kelamin</flux:pillbox.option>   
                                 <flux:pillbox.option value="agama" wire:key="agama">agama</flux:pillbox.option>
-                                <flux:pillbox.option value="TTL" wire:key="TTL">TTL</flux:pillbox.option>
                             </flux:pillbox>
 
                              <flux:color-picker label="Warna Tabel 1" wire:model.live.throttle.500ms="detaildesainkartu.genap" type="button" format="rgba" />
@@ -150,14 +151,19 @@
                                             </div>
                                             <div class="card-body" style="color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}">
                                                 <div class="user-name">Nama Lengkap</div>
-                                                <div class="user-nisn" style="color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}">1234567890</div>
+                                                <div class="user-nisn" style="color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}">JURUSAN</div>
                                                 <div class="classuntukrapikan" style="margin-top: 15px; text-align: center;">
                                                     <table style="width: 85%; margin: 0 auto; border-collapse: collapse; font-size: 9px; color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}; background-color: {{ $detaildesainkartu['genap'] }}; border-radius: 4px; overflow: hidden;">
                                                         @foreach ($pillbox as $item)
                                                         <tr valign="top" @if ($loop->iteration %2 == 1)
                                                             style="background-color: {{ $detaildesainkartu['ganjil'] }};"
                                                         @endif>
+                                                            @if ($item == 'ttl')
+                                                            <th style="padding: 5px 8px; text-align: left; font-weight: bold; width:5px;">{{ strtoupper($item) }}</th>
+                                                            @else
                                                             <th style="padding: 5px 8px; text-align: left; font-weight: bold; width:5px;">{{ ucfirst($item) }}</th>
+
+                                                            @endif
                                                             <td style="padding: 5px 8px; text-align: left;">none</td>
                                                         </tr>
                                                             

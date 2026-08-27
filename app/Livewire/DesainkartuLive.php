@@ -38,8 +38,8 @@ class DesainkartuLive extends Component
     public function mount()
     {
         $this->pillbox = [
-            "jurusan",
-            "instansi",
+            "nisn",
+            "ttl",
             "alamat",
         ];
 
@@ -81,7 +81,7 @@ Kartu wajib dibawa saat menghadiri kegiatan resmi.",
 
             $desain = $desainkartu->first()->datadesainkartu();
             if($desain->count() > 0) {
-               $this->pillbox = $desain->first()->pluck('identitas')->toArray();
+               $this->pillbox = $desain->pluck('identitas')->toArray();
             }
         }else {
             $this->tampil =false;
@@ -115,6 +115,7 @@ Kartu wajib dibawa saat menghadiri kegiatan resmi.",
             'detaildesainkartu.radiusborder' => 'required|numeric',
         ]);
 
+        // dd($this->pillbox);
         if($this->detaildesainkartu["desainkartu"] == "solid") {
             $this->validate([
                 'detaildesainkartu.warnadepan' => 'required',
@@ -146,11 +147,11 @@ Kartu wajib dibawa saat menghadiri kegiatan resmi.",
         
 
         // dd($this->pillbox);
-        datadesainkartuM::where("iddesainkartu", desainkartuM::where("idinstansi", $this->idinstansi)->first()->iddesainkartu)->delete();
-        // dd($this->pillbox);
+        $iddatadesainkartu = desainkartuM::where("idinstansi", $this->idinstansi)->first()->iddesainkartu;
+        datadesainkartuM::where("iddesainkartu", $iddatadesainkartu)->delete();
         foreach ($this->pillbox as $key => $data) {
             datadesainkartuM::create([
-                "iddesainkartu" => desainkartuM::where("idinstansi", $this->idinstansi)->first()->iddesainkartu,
+                "iddesainkartu" => $iddatadesainkartu,
                 "identitas" => $data,
                 "index" => $key + 1,
             ]);

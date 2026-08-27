@@ -17,6 +17,8 @@
             "foto" => $item->foto??'',
             "namasiswa" => $item->namasiswa??'',
             "nisn" => $item->nisn??'',
+            "tempatlahir" => $item->tempatlahir??'',
+            "tanggallahir" => $item->tanggallahir??'',
             "alamat" => $item->alamat??'',
             "agama" => $item->agama??'',
             "jurusan" => $item->jurusan->inisialjurusan??'',
@@ -42,6 +44,7 @@
                                             @endif
                                         ">
                                             {{-- JIKA DESAIN ADALAH GAMBAR, RENDER SEBAGAI IMG ABSOLUT --}}
+                                           
                                             @if($detaildesainkartu['desainkartu'] == 'gambar')
                                                 <img src="{{ Storage::disk('s3')->temporaryUrl($detaildesainkartu['gambardepan'] ?? 'profil.png', now()->addMinutes(10)) }}" 
                                                     style="
@@ -95,14 +98,17 @@
                                                 </center>
                                             </div>
                                             <div class="card-body" style="color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}">
-                                                <div class="user-name">{{ ucwords(strtolower($data['namasiswa']??'')) }}</div>
-                                                <div class="user-nisn" style="color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}">{{ $data['nisn'] }}</div>
+                                                <div class="user-name" style="margin-top: 2px">{{ ucwords(strtolower($data['namasiswa']??'')) }}</div>
+                                                <div class="user-nisn" style="color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}">{{ strtoupper($data['jurusan']) }}</div>
                                                 <div class="classuntukrapikan" style="margin-top: 15px; text-align: center;">
-                                                    <table style="width: 85%; margin: 0 auto; border-collapse: collapse; font-size: 9px; color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}; {{ $detaildesainkartu['genap'] }}; border-radius: 4px; overflow: hidden;">
+                                                    <table style="width: 85%; margin: 0 auto; border-collapse: collapse; font-size: 8px; color: {!! $detaildesainkartu['warnatextdepan']??'#ffffff' !!}; {{ $detaildesainkartu['genap'] }}; border-radius: 4px; overflow: hidden;">
+                                                        @php
+                                                            \Carbon\Carbon::setLocale('id');
+                                                        @endphp
                                                         @foreach ($pillbox as $item)
-                                                        @if ($item == "jurusan")
+                                                        @if ($item == "nisn")
                                                             @php
-                                                                $pill = $data["jurusan"];
+                                                                $pill = $data["nisn"];
                                                             @endphp
                                                         @elseif($item == "instansi")
                                                             @php
@@ -110,7 +116,7 @@
                                                             @endphp
                                                         @elseif($item == "alamat")
                                                             @php
-                                                                $pill = $data["alamat"];
+                                                                $pill = ucwords(strtolower($data["alamat"]));
                                                             @endphp
                                                         @elseif($item == "kelamin")
                                                             @php
@@ -120,11 +126,22 @@
                                                             @php
                                                                 $pill = $data["agama"];
                                                             @endphp
+                                                        @elseif($item == "ttl")
+                                                            @php
+                                                                $pill = ucwords(strtolower($data["tempatlahir"])).", ". \Carbon\Carbon::parse($data['tanggallahir'])->isoFormat('DD MMMM YYYY');
+                                                            @endphp
                                                         @endif
                                                         <tr valign="top" @if ($loop->iteration %2 == 1)
                                                             style="background-color: {{ $detaildesainkartu['ganjil'] }};"
                                                         @endif>
-                                                            <th style="padding: 5px 8px; text-align: left; font-weight: bold; width:5px;">{{ ucfirst($item) }}</th>
+                                                            
+                                                        @if ($item == "ttl" || $item == "nisn")
+                                                        <th style="padding: 5px 8px; text-align: left; font-weight: bold; width:5px;">{{ strtoupper($item) }}</th>
+                                                        
+                                                        @else
+                                                        <th style="padding: 5px 8px; text-align: left; font-weight: bold; width:5px;">{{ ucfirst($item) }}</th>
+                                                        
+                                                        @endif
                                                             <td style="padding: 5px 8px; text-align: left;">{{ $pill }}</td>
                                                         </tr>
                                                             

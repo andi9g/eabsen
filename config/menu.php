@@ -114,7 +114,7 @@ return [
         'label' => 'Cetak Kartu',
         'route' => 'cetakkartu',
         'icon' => 'credit-card',
-        'roles' => ['superadmin'],
+        'roles' => ['superadmin', 'admin'],
     ],
     
     [

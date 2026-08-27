@@ -33,6 +33,10 @@ class superadminC extends Controller
         where("idkelas", $idkelas)
         ->where("idjurusan", $idjurusan)
         ->where("idinstansi", $request->idinstansi)
+        ->where(function ($query) {
+            $query->whereNotNull('foto')
+                ->where('foto', '!=', '');
+        })
         ->paginate(20);
 
         $detaildesainkartu = ['desainkartu' => 'solid',
@@ -59,7 +63,7 @@ Kartu wajib dibawa saat menghadiri kegiatan resmi.",
 
         $pillbox = [
             "jurusan",
-            "instansi",
+            "ttl",
             "alamat",
         ];
 
@@ -82,6 +86,7 @@ Kartu wajib dibawa saat menghadiri kegiatan resmi.",
             'siswa' => $siswa,
             'detaildesainkartu' => $detaildesainkartu,
             'pillbox' => $pillbox,
+            'carbon' => \Carbon\Carbon::class,
             'deskripsi' => $deskripsi,
         ])->setOption('isRemoteEnabled', true);
 
