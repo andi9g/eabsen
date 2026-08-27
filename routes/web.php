@@ -108,10 +108,10 @@ use Illuminate\Support\Facades\Response;
             Route::get("cetak/laporansiswa/cetak", [pegawaiC::class, 'cetaklaporansiswa'])->name("laporansiswa.cetak");
             Route::get("cetak/laporanpegawai/cetak", [pegawaiC::class, 'cetaklaporanpegawai'])->name("laporanpegawai.cetak");
         // });    
-        // Route::middleware(['superadmin'])->group(function () {
+        Route::middleware(['admin'])->group(function () {
             Route::get("cetak-kartu", [superadminC::class, 'cetakkartu'])->name("cetakkartu");
             Route::get("cetak-kartu/{idkelas}/{idjurusan}/{idinstansi}", [superadminC::class, 'cetakkartupdf'])->name("cetak.kartu");
-        // });
+        });
             
     
     });
