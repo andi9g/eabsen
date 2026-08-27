@@ -150,17 +150,17 @@
             list-style-type: disc;
              padding: 0 7px;       /* Menghilangkan jarak dalam (penyebab menjorok) */
              margin:0;
-             margin-top: -17px;
+             margin-top: -15px;
             
         }
         ol {
             list-style-type: decimal;
              padding: 0 7px;       /* Menghilangkan jarak dalam (penyebab menjorok) */
              margin:0; 
-             margin-top: -17px;
+             margin-top: -15px;
         }
         li {
             margin-left: 15px;
              padding: 0;       /* Menghilangkan jarak dalam (penyebab menjorok) */
-            margin-bottom: -23px;
+            margin-bottom: -20px;
         }
