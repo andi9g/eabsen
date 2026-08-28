@@ -185,7 +185,9 @@
                                            <div class="card-back-content" style="color: {!! $detaildesainkartu['warnatextbelakang'] !!}">
                                                 <div class="terms-title">{!! $deskripsi["judul"] !!}</div>
                                                 {{-- <ol class="terms-list"> --}}
-                                                    {!! $deskripsi["deskripsi"] !!}
+                                                    <div class="des">
+                                                        {!! $deskripsi["deskripsi"] !!}
+                                                    </div>
                                                 {{-- </ol> --}}
                                             </div>
                                             <div class="card-footer">
