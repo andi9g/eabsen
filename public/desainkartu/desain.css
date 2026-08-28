@@ -150,20 +150,20 @@
             list-style-type: disc;
              padding: 0 7px;       /* Menghilangkan jarak dalam (penyebab menjorok) */
              margin:0;
-             font-size: 8px;
-             margin-top: -15px;
+             font-size: 9px;
+             margin-top: -10px;
             
         }
         ol {
             list-style-type: decimal;
              padding: 0 7px;       /* Menghilangkan jarak dalam (penyebab menjorok) */
              margin:0; 
-             font-size: 8px;
-             margin-top: -15px;
+             font-size: 9px;
+             margin-top: -10px;
         }
         li {
             margin-left: 15px;
              padding: 0;       /* Menghilangkan jarak dalam (penyebab menjorok) */
-            margin-bottom: -20px;
-            font-size: 8px;
+            margin-bottom: -15px;
+            font-size: 9px;
         }
