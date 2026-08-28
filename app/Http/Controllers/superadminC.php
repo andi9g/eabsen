@@ -37,6 +37,7 @@ class superadminC extends Controller
             $query->whereNotNull('foto')
                 ->where('foto', '!=', '');
         })
+        ->where('nisn', '0092727273')
         ->paginate(20);
 
         $detaildesainkartu = ['desainkartu' => 'solid',
