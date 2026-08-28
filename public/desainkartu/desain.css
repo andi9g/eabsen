@@ -44,7 +44,7 @@
             width: 5.4cm;
             height: 8.6cm;
             position: relative;
-            border-radius: 8px; /* Sudut rounded sedikit */
+            border-radius: 13px; /* Sudut rounded sedikit */
             overflow: hidden;
             -webkit-border-radius: 8px; /* Fallback dompdf older version */
             border: 1px solid #ddd; /* Tipis saja untuk batas potong pas kartu */
