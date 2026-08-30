@@ -54,9 +54,9 @@
                             </flux:text>
                             <div class="mt-2">
                                 @if (!empty($item->deviceid))
-                                    <flux:badge variant="pill" color="green" icon="check-circle" size="sm">Terdaftar</flux:badge>
+                                    <flux:badge variant="pill" color="green" icon="check-circle" size="sm">{{ $item->deviceid }}</flux:badge>
                                 @else
-                                    <flux:badge variant="pill" color="red" icon="x-circle" size="sm">Belum Terdaftar</flux:badge>
+                                    <flux:badge variant="pill" color="red" icon="x-circle" size="sm">{{ $item->deviceid }}</flux:badge>
                                 @endif
 
                             </div>
