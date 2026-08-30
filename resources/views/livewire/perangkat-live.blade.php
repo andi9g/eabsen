@@ -47,11 +47,19 @@
                     <div class="flex flex-col md:flex-row md:items-center">
                         <div>
                             <flux:callout.heading class="text-[12pt]">
-                                ALAT REGISTRASI {{ $loop->iteration + $data->firstItem() - 1  }}
+                                Alat Registerasi {{ $loop->iteration + $data->firstItem() - 1  }}
                             </flux:callout.heading>
-                            <flux:callout.heading class="text-[12pt]" icon="command-line">
-                                ( {{ $item->kodeperangkat }} )
-                            </flux:callout.heading>
+                            <flux:text class="text-[12pt]" >
+                                Kode : {{ $item->kodeperangkat }} 
+                            </flux:text>
+                            <div class="mt-2">
+                                @if (!empty($item->deviceid))
+                                    <flux:badge variant="pill" color="green" icon="check-circle" size="sm">Terdaftar</flux:badge>
+                                @else
+                                    <flux:badge variant="pill" color="red" icon="x-circle" size="sm">Belum Terdaftar</flux:badge>
+                                @endif
+
+                            </div>
                         </div>
                 
                         <div class="mt-3 md:mt-0 md:ml-auto w-full md:w-auto">
