@@ -47,6 +47,7 @@ class PerangkatLive extends Component
         ]);
     }
 
+
     public function buttontambahalatregisterasi()
     {
         LivewireAlert::title("Tambah Alat ".ucfirst($this->target))

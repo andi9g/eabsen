@@ -22,6 +22,13 @@
     </flux:modal>
 
     <div class="w-full md:w-[80%] mx-auto space-y-4">
+        <div class="flex">
+            <div class="ml-auto">
+                <flux:button variant="primary" icon="arrow-path" color="green" wire:click="$refresh">
+                    Refresh
+                </flux:button>
+            </div>
+        </div>
         <flux:tab.group >
             <flux:tabs wire:model="tab" :scrollable="true" wire:click="pindah">
                 <flux:tab name="pengelola" class="capitalize">Alat Registrasi</flux:tab>
