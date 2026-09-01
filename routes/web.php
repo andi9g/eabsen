@@ -110,7 +110,7 @@ use Illuminate\Support\Facades\Response;
         // });    
         Route::middleware(['admin'])->group(function () {
             Route::get("cetak-kartu", [superadminC::class, 'cetakkartu'])->name("cetakkartu");
-            Route::get("cetak-kartu/{idkelas}/{idjurusan}/{idinstansi}", [superadminC::class, 'cetakkartupdf'])->name("cetak.kartu");
+            Route::get("cetak-kartu/cetak", [superadminC::class, 'cetakkartupdf'])->name("cetak.kartu");
         });
             
     

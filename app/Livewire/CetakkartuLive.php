@@ -23,7 +23,7 @@ class CetakkartuLive extends Component
     #[Locked]
     public $idinstansi, $akses;
 
-    public $instansi, $data, $paginate;
+    public $instansi, $data, $paginate, $cari;
     public function mount()
     {
         $this->idinstansi = session()->get("idinstansi");
@@ -31,7 +31,10 @@ class CetakkartuLive extends Component
         $this->instansi = instansiM::when($this->idinstansi, function ($q) {
             $q->where("idinstansi", $this->idinstansi);
         })->get();
-        $this->data = [];
+        $this->data = [
+            "status" => "rombel",
+            "idinstansi" => $this->idinstansi,
+        ];
         $this->paginate = "";
     }
 
@@ -68,7 +71,17 @@ class CetakkartuLive extends Component
         
     }
 
+    public function getSiswaProperty()
+    {
+        return siswaM::where("idinstansi", $this->idinstansi)
+        ->when($this->cari, function($q) {
+            $q->where("namasiswa", "like", "%".$this->cari."%");
+        })->paginate(10);
+    }
 
+    public function pilihsiswa()
+    {
+    }
     protected function validasi($idinstansi):bool
     {
         $error = false;

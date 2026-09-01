@@ -21,23 +21,30 @@ class superadminC extends Controller
             "judul" => "Cetak Kartu"
         ]);
     }
-    public function cetakkartupdf(Request $request, $idkelas, $idjurusan, $idinstansi)
+    public function cetakkartupdf(Request $request)
     {
-        
+        $data = $request->all();
+
+        // dd($data);
         $idinstansi = session()->get('idinstansi');
         if(empty($idinstansi)) {
             $idinstansi = $request->idinstansi;
         }
 
-        $siswa = siswaM::
-        where("idkelas", $idkelas)
-        ->where("idjurusan", $idjurusan)
-        ->where("idinstansi", $request->idinstansi)
-        ->where(function ($query) {
-            $query->whereNotNull('foto')
-                ->where('foto', '!=', '');
-        })
-        ->paginate(20);
+        if($data["status"] == "satuan") {
+            $siswa = siswaM::where("idinstansi", $data['idinstansi'])
+            ->whereIn("idsiswa", $data['siswa'])->get();
+        }else {
+            $siswa = siswaM::
+            where("idkelas", $data['idkelas'])
+            ->where("idjurusan", $data['idjurusan'])
+            ->where("idinstansi", $data['idinstansi'])
+            ->where(function ($query) {
+                $query->whereNotNull('foto')
+                    ->where('foto', '!=', '');
+            })
+            ->paginate(20);
+        }
 
         $detaildesainkartu = ['desainkartu' => 'solid',
             'warnadepan' => '#1a365d',
